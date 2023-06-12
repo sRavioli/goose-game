@@ -1,0 +1,21 @@
+MANUALE
+Consentiti da 2 a 4 giocatori. Ogni giocatore avrà un nome unico di massimo 3
+lettere. Se il nome fornito risulta essere più lungo di questo limite, verrà
+troncato alle prime 3 lettere.
+
+Il tabellone di gioco è un percorso ad "S" formato da minimo 50 e massimo 90
+caselle.
+
+Lo scopo del gioco è quello di giungere alla casella finale.
+
+INTERFACCIA
+Lo stesso tasto, se premuto, può avere comportamenti diversi in base al menù in
+ci si trova.
+Per sapere quale tasto premere per selezionare la voce di un menù, bisogna
+guardare tra le parentesi quadre, ad esempio per selezionare la voce "[h]elp"
+bisognerà premere il tasto 'h', per selezionare invece la voce "[n]ew game" il
+tasto 'n' e così via per le altre voci.
+La sintassi di una voce di un menù è dunque la seguente:
+"<[<tasto>]voce-del-menu>",
+dove "<tasto>" è il tasto da premere e "<voce-del-menu>" è l'azione che verrà
+eseguita.

@@ -1,0 +1,4 @@
+GAME PAUSED
+[s]ave game
+[l]eave game
+go [b]ack

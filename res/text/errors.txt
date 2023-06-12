@@ -1,0 +1,9 @@
+given file name (%s) is invalid
+failed to write to file '%s'
+failed to read from file '%s'
+value of %s is out of bounds, please retry.
+invalid input, please enter a valid input
+this is %s username! please change yours.
+this (%s) username is invalid, please retry.
+failed to allocate memory for pointer with size '%i'
+key '%c' does nothing.

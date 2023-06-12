@@ -1,0 +1,19 @@
+REGOLE
+Per scegliere il giocatore che inizia si procede con il lancio di un dado, da
+parte di ogni giocatore. Il giocatore che ottiene il punteggio piu’ alto inizia
+a giocare. Si procederà poi in senso orario. Il prescelto comincerà lanciando i
+dadi e muovendo la propria pedina di un numero di caselle pari alla somma uscita
+dai dadi. Nella versione classica alcune caselle rappresentano delle oche. Il
+giocatore che arriva su di esse può spostarsi in avanti di un numero di caselle
+pari a quelle ottenute con il lancio dei dati. Le caselle oca sono solitamente
+poste ogni nove caselle normali. Ci sono poi altre caselle speciali, le cui
+posizioni indicate sono quelle nel tabellone da 90 caselle, che sono:
+- il ponte (6) dove si paga la posta e si ripete il movimento come nelle caselle
+  con le oche;
+- La locanda (19) in cui si sta fermi 3 turni:
+- Il pozzo (31) e la prigione (52) si rimane bloccati finchè non arriva un'altra
+  pedina che prenderà il nostro posto o quando si ottiene 5 o 7 al lancio;
+- Il labirinto (42) che fà tornare alla casella 33;
+- Lo scheletro (58) che fà retrocedere fino alla casella 1.
+La casella di arrivo va raggiunta con un lancio di dadi esatto altrimenti si
+retrocede dei punti in surplus.
