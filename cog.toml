@@ -7,11 +7,17 @@ pre_package_bump_hooks = []
 post_package_bump_hooks = []
 
 [commit_types]
+hotfix = { changelog_title = "Hotfixes" }
+release = { changelog_title = "Releases" }
 
 [changelog]
 path = "CHANGELOG.md"
-authors = []
+template = "remote"
+remote = "github.com"
+repository = "goose-game"
+owner = "sRavioli"
+authors = [{ username = "sRavioli", signature = "Simone Fidanza" }]
 
-[bump_profiles]
+# [bump_profiles]
 
-[packages]
+# [packages]
