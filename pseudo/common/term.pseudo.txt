@@ -1,0 +1,309 @@
+FUNZIONI PER GESTIRE IL TERMINALE
+=================================
+
+vedere "./../globals.pseudo.txt"
+
+Questo file contiene delle funzioni utili per manipolare e lavorare col terminale.
+
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+ESC      := 27 // Il valore ASCII che rappresenta il tasto "Esc"
+ENTER    := 13 // Il valore ASCII che rappresenta il tasto "Invio"
+SPACEBAR := 32 // Il valore ASCII che rappresenta il tasto "Barra Spaziatrice"
+
+TITLE_BAR := "IL GIOCO DELL'OCA" // Il titolo da mostrare in ogni schermata
+
+MAX_MENU_LINES := 10 // Il numero massimo consentito di righe per un file menù
+MAX_FILE_LINES := 23 // Il numero massimo consentito di righe per un file
+
+-------------------------------------------------------------------------------
+
+FUNZIONE get_term_size()
+========================
+
+Restituisce le dimensioni del terminale utilizzando direttive specifiche per il
+sistema operativo.
+
+INPUT:
+- width, variabile che riceverà il valore della larghezza del terminale, intero maggiore di zero;
+- height, variabile che riceverà il valore dell'altezza del terminale, intero maggiore di zero.
+
+OUTPUT:
+- width, il valore della larghezza del terminale, intero maggiore di zero;
+- height, il valore dell'altezza del terminale, intero maggiore di zero;
+
+-----------------------------------------
+
+FUNZIONE clear_screen()
+=======================
+
+Cancella tutto il contenuto presente a schermo utilizzando direttive specifiche
+per il sistema operativo.
+
+INPUT:
+- nullo, non riceve nulla.
+
+OUTPUT:
+- nullo, non restituisce nulla.
+
+-----------------------------------------
+
+FUNZIONE clear_line()
+=====================
+
+Cancella la riga su cui si trova il cursore, utilizzando delle direttive
+specifiche per il sistema operativo.
+
+INPUT:
+- nullo, non riceve nulla.
+
+OUTPUT:
+- nullo, non restituisce nulla.
+
+-----------------------------------------
+
+FUNZIONE new_screen()
+=====================
+
+Crea una nuova schermata per il gioco. Pulisce lo schermo e stampa il banner.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- term_width, larghezza del terminale, intero positivo;
+- term_heigth, altezza del terminale, intero positivo;
+- left_space, lo spazio da inserire a sinistra del titolo, intero positivo;
+- i, contatore intero, intero positivo;
+
+ALGORITMO:
+clear_screen()
+get_term_size(term_width, term_heigth);
+
+left_space := 1 + (term_width - str_length(TITLE_BAR)) / 2
+i := 0
+MENTRE (i < left_space)
+  StampareAVideo(SPACE_CHAR)
+  i := i + 1
+FINE MENTRE
+StampareAVideo(TITLE_BAR)
+StampareAVideo(LINE_END)
+
+i := 0
+MENTRE (i < term_width)
+  StampareAVideo('-')
+  i := i + 1
+FINE MENTRE
+StampareAVideo(LINE_END)
+
+-----------------------------------------
+
+FUNZIONE wait_keypress()
+========================
+
+Stampa il messaggio che riceve in input e attende che l'utente prema un tasto
+qualsiasi.
+
+INPUT:
+- message, il messaggio da stampare a video, stringa.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- wait, indica se attendere l'input dell'utente, booleano che assume valore TRUE
+  se è necessario attendere l'input, FALSE altrimenti.
+
+ALGORITMO:
+StampareAVideo(message)
+
+wait := TRUE
+MENTRE (wait)
+  SE (LeggereDaTastiera() non è nullo) ALLORA
+    wait := FALSE
+  FINE SE
+FINE MENTRE
+
+-----------------------------------------
+
+FUNZIONE is_back_key()
+======================
+
+Determina se il tasto premuto sia uno di quelli per tornare al menù precedente.
+
+INPUT:
+- key, il tasto di cui verificare se sia per tornare indietro, carattere.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se il tasto è
+  di quelli per tornare indietro, FALSE altrimenti.
+
+ALGORITMO:
+result := FALSE
+SE ((key = ESC) OR (key = ENTER) OR (key = SPACEBAR) OR (key = 'b')) ALLORA
+  result := TRUE
+FINE SE
+
+-----------------------------------------
+
+FUNZIONE is_quit_key()
+======================
+
+Determina se il tasto premuto sia uno di quelli per uscire.
+
+INPUT:
+- key, il tasto di cui verificare se sia per tornare indietro, carattere.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se il tasto è
+  di quelli per tornare indietro, FALSE altrimenti.
+
+ALGORITMO:
+result := FALSE
+SE ((key = ESC) OR (key = 'q'))
+  ALLORA result := TRUE
+FINE SE
+
+-----------------------------------------
+
+FUNZIONE print_menu()
+=====================
+
+Stampa a video un menu contenuto in un file di testo.
+
+INPUT:
+- filename, nome del file da aprire, stringa.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- file, file da cui leggere il menu, file;
+- width, larghezza della finestra del terminale, intero positivo;
+- height, altezza della finestra del terminale, intero positivo;
+- menu, array di MAX_MENU_LINES stringhe con lunghezza MAX_BUFFER_LEN, array
+  bidimensionale;
+- buffer, stringa di lunghezza MAX_BUFFER_LEN, stringa;
+- num_lines, numero di righe del file, intero positivo;
+- max_len, lunghezza della righa più lunga del menù, intero positivo;
+- i, contatore utilizzato per iterazioni, intero positivo;
+- vert_padding, indica di quanto spostare verso il basso il menu, intero positivo;
+- left_padding, indica di quanto spostare verso destra la singola voce, intero positivo.
+
+ALGORITMO:
+new_screen()
+
+file = AprireFile(filename)
+SE (file non esiste)
+  ALLORA esci
+FINE
+get_term_size(width, height)
+
+num_lines := 0
+max_len := 0
+
+MENTRE (num_lines < MAX_MENU_LINES)
+  buffer := LeggereDaFile(file)
+  max_len := max(str_length(buffer), max_len)
+
+  // copy string char by char
+  i := 0
+  MENTRE (i < str_length(buffer))
+    carattere in posizione i della stringa in posizione num_lines di menu :=
+      carattere in posizione i di buffer
+    i := i + 1
+  FINE MENTRE
+  num_lines := num_lines + 1
+FINE MENTRE
+ChiudereFile(file)
+
+// print vertical padding to center menu
+i := 0
+vert_padding := (height - num_lines - 2) * 0.45
+MENTRE (i < vert_padding)
+  StampareAVideo(STR_END)
+  i := i + 1
+FINE MENTRE
+
+// print horizontal padding
+i := 0
+left_padding := (width - max_len) * 0.5
+MENTRE (i < num_lines)
+  j := 0
+  MENTRE (j < left_padding)
+    StampareAVideo(SPACE_CHAR)
+    j := j + 1
+  FINE MENTRE
+  StampareAVideo(elemento in posizione i di menu)
+  i := i + 1
+FINE MENTRE
+StampareAVideo(LINE_END)
+
+
+FUNZIONE print_file()
+=====================
+
+Stampa a video il contenuto di un file di testo.
+
+INPUT:
+- filename, nome del file di cui stampare il contenuto, stringa.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- file, file di cui stampare il contenuto, file;
+- width, larghezza della finestra del terminale, intero positivo;
+- height, altezza della finestra del terminale, intero positivo;
+- buffer, stringa contenente una riga del file, stringa;
+- num_lines, numero di righe del file, intero positivo;
+
+ALGORITMO:
+new_screen()
+
+file = AprireFile(filename)
+SE (file non esiste) ALLORA
+  esci
+FINE SE
+get_term_size(width, height)
+
+num_lines := 0
+MENTRE (num_lines < MAX_FILE_LINES)
+  buffer := LeggereDaFile(file)
+  StampareAVideo(buffer)
+  num_lines := num_lines + 1
+FINE MENTRE
+ChiudereFile(file)
+
+
+FUNZIONE display_file()
+=======================
+
+Stampa il contenuto di un file di testo e attende l'input dell'utente per
+tornare indietro.
+
+INPUT:
+- filename, il nome del file da stampare a video, stringa.
+
+OUTPUT:
+- nullo, non ha output.
+
+ALGORITMO:
+print_file(filename)
+StampareAVideo("Exit this view by pressing b/ESC/ENTER/SPACEBAR")
+
+display := TRUE
+MENTRE (display = TRUE)
+  key := LeggereDaTastiera()
+  SE (is_back_key(key)) ALLORA
+    display := FALSE
+  FINE SE
+FINE MENTRE
+
+
