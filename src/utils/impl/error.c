@@ -14,8 +14,6 @@
 
 #include "../inc/error.h"
 
-#define ERROR_FILE "../res/text/errors.txt"
-
 void print_err(const int index) {
   logger.enter_fn(__func__);
   logger.log("attempting to open file '%s'", ERROR_FILE);
