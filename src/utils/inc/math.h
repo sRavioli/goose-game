@@ -5,7 +5,7 @@
  * @brief Header file for maths related functions.
  *
  * This file contains declarations for functions related to mathematical
- * operations such as a proportion or rolling two die.
+ * operations such as a proportion or rolling two dice.
  *
  * @authors
  *    Amorese Emanuele
