@@ -1,0 +1,90 @@
+FUNZIONI PER GLI ERRORI
+=======================
+
+Questo file contiene le funzioni per la gestione degli errori.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+INVALID_KEY_ERROR := 1
+VALUE_OUT_OF_BOUND_ERROR := 2
+INVALID_INPUT_ERROR := 3
+INVALID_USERNAME_ERROR := 4
+DUPLICATE_USERNAME_ERROR := 5
+ALLOCATION_FAILED_ERROR := 6
+STR_ALLOCATION_FAILED_ERROR := 7
+INVALID_FILENAME_ERROR := 8
+FILE_NOT_WRITABLE_ERROR := 9
+FILE_NOT_READABLE_ERROR := 10
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+FUNZIONE print_err()
+====================
+
+INPUT:
+- index, numero di riga da cui leggere l'errore, intero.
+
+OUTPUT:
+- nullo, non ha output, vuoto.
+
+LAVORO:
+- file, file degli errori, file;
+- lines, riga corrente del file, intero;
+- buffer, errore da stampare a video, stringa.
+
+ALGORITMO:
+file := AprireFile(ERRORS_FILE)
+SE (file non esiste) ALLORA
+  TERMINA
+FINE SE
+lines := 0
+ESEGUI
+  lines := lines + 1
+  SE (lines = index) ALLORA
+    buffer := LeggereDaFile(ERRORS_FILE)
+    StampareAVideo(buffer)
+  FINE SE
+FINCHÉ (LeggereDaFile(ERRORS_FILE) <> EOF)
+FINE ESEGUI
+ChiudereFile(file)
+
+
+-----------------------------------------
+
+
+FUNZIONE throw_err()
+====================
+
+INPUT:
+- index, indice dell'errore da stampare, intero.
+
+OUTPUT:
+- nullo, non ha outpu, vuoto.
+
+LAVORO:
+- file, file degli errori, file;
+- lines, riga corrente del file, intero;
+- buffer, errore da stampare a video, stringa.
+
+ALGORITMO:
+file := AprireFile(ERRORS_FILE)
+SE (file non esiste) ALLORA
+  TERMINA
+FINE SE
+lines := 0
+ESEGUI
+  lines := lines + 1
+  SE (lines = index) ALLORA
+    buffer := LeggereDaFile(ERRORS_FILE)
+    StampareAVideo(buffer)
+  FINE SE
+FINCHÉ (LeggereDaFile(ERRORS_FILE) <> EOF)
+FINE ESEGUI
+ChiudereFile(file)
+Uscire()
+
