@@ -56,7 +56,7 @@
 /**
  * @brief Path to the file containing all the errors.
  */
-#define ERROR_FILE "../res/text/errors.txt"
+#define ERROR_FILE "./res/text/errors.txt"
 
 /**
  * @brief Index of the error message that indicates an invalid filename.

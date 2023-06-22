@@ -59,7 +59,7 @@ char *str_allocate(const int size) {
   logger.log("attempting to allocate memory for string of size %i", size);
   char *buffer = (char *)malloc(1 + size * sizeof(char));  // NOLINT
   if (!buffer) {
-    logger.exit_fn();
+    logger.stop();
     throw_err(ALLOCATION_ERROR);
   }
   logger.log("successfully allocated memory for string of size %i", size);
