@@ -1,5 +1,11 @@
+# Changelog
+
+- - -
+
 ## Unreleased ([b943ac4..de034cb](https://github.com/sRavioli/goose-game/compare/b943ac4..de034cb))
+
 #### Bug Fixes
+
 - **(docs)** use markdown syntax - ([e3a9440](https://github.com/sRavioli/goose-game/commit/e3a94402642058e28761e5e603a28da1dc454751)) - [@sRavioli](https://github.com/sRavioli)
 - **(mask)** use powershell, fix run command - ([6c1dab7](https://github.com/sRavioli/goose-game/commit/6c1dab7fa7024af051e718295a94f7fd56a103e8)) - [@sRavioli](https://github.com/sRavioli)
 - **(misc)** remove outdated menu file - ([be2948c](https://github.com/sRavioli/goose-game/commit/be2948cda2d8eebea0d0bdc7673c4c0a16240899)) - [@sRavioli](https://github.com/sRavioli)
@@ -10,7 +16,9 @@
 - adjust path to error file, use `logger.stop()` - ([96be6c3](https://github.com/sRavioli/goose-game/commit/96be6c3fff3f607705a4e761584c2e049bcbd6a7)) - [@sRavioli](https://github.com/sRavioli)
 - bug that would cause to print weird numbers when printing username - ([484ce89](https://github.com/sRavioli/goose-game/commit/484ce897a99bfd2ab8f615cac5404ad2a6e53aae)) - [@sRavioli](https://github.com/sRavioli)
 - move non main fn under main - ([febf480](https://github.com/sRavioli/goose-game/commit/febf480d6281a70aaedebc30d2b65f8fb16e6ebf)) - [@sRavioli](https://github.com/sRavioli)
+
 #### Features
+
 - **(code)** add documentation and error messages indexes - ([3798f0c](https://github.com/sRavioli/goose-game/commit/3798f0cb07a02f2d0cabb001c4f9b7a519a10a33)) - [@sRavioli](https://github.com/sRavioli)
 - **(code)** add error handling logic - ([8cb7a8c](https://github.com/sRavioli/goose-game/commit/8cb7a8ccc8b016d51332577d1303a9ae37883411)) - [@sRavioli](https://github.com/sRavioli)
 - **(codespell)** add dictionaries - ([6c741d1](https://github.com/sRavioli/goose-game/commit/6c741d12904506474765a02e8d6a4e48e5aebd2c)) - [@sRavioli](https://github.com/sRavioli)
@@ -45,11 +53,13 @@
 - upload src folder - ([decc082](https://github.com/sRavioli/goose-game/commit/decc0828461aa8be640a1f1c02b4a29613761970)) - [@sRavioli](https://github.com/sRavioli)
 - add miscellaneous files - ([d7a442f](https://github.com/sRavioli/goose-game/commit/d7a442f85f8b6761caae7d9f6032c742234ef144)) - [@sRavioli](https://github.com/sRavioli)
 - add project resources - ([0dcc1bd](https://github.com/sRavioli/goose-game/commit/0dcc1bd1e84711ce1ca267b9651757dc1f8c098c)) - [@sRavioli](https://github.com/sRavioli)
+
 #### Miscellaneous Chores
+
 - create changelog - ([de034cb](https://github.com/sRavioli/goose-game/commit/de034cbc305539de9e96eeaf40013f5f2a46a9e4)) - [@sRavioli](https://github.com/sRavioli)
 - add project resources - ([2d27490](https://github.com/sRavioli/goose-game/commit/2d274900ff6ff617d7878ec40a24f440301da980)) - [@sRavioli](https://github.com/sRavioli)
 - add `.gitignore` for C - ([0d661d8](https://github.com/sRavioli/goose-game/commit/0d661d82bba233e0568aa6be8ad88d49198527cb)) - [@sRavioli](https://github.com/sRavioli)
+
 #### Refactoring
+
 - complete structure change - ([d7d9860](https://github.com/sRavioli/goose-game/commit/d7d9860a1eb3f807350d2a650c30c686ea9a5290)) - [@sRavioli](https://github.com/sRavioli)
-
-
