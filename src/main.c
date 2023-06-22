@@ -11,23 +11,17 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "./common/inc/logger.h"
-#include "./common/inc/term.h"
+#include "./utils/inc/logger.h"
+#include "./utils/inc/term.h"
+#include "./utils/inc/tui.h"
 
-#include "./inc/errors.h"
-#include "./inc/globals.h"
+#include "./globals.h"
+#include "./utils/inc/error.h"
 
-#include "./inc/handle_game.h"
-#include "./inc/handle_help.h"
+#include "./core/inc/handle_game.h"
+#include "./core/inc/handle_help.h"
 
-void main_menu() {
-  logger.enter_fn(__func__);
-
-  new_screen();
-  print_menu(MAIN_MENU);
-
-  logger.exit_fn();
-}
+void main_menu();
 
 int main(void) {
   logger.start("goose.log");
@@ -65,7 +59,7 @@ int main(void) {
       menu_loop = FALSE;
     } else {
       clear_line();
-      print_err(INVALID_KEY_ERROR, key);
+      print_err(INVALID_KEY_ERROR);
       logger.log("invalid key pressed, continuing loop");
     }
   }
@@ -73,4 +67,13 @@ int main(void) {
   // logger.exit_fn();
   logger.stop();
   return 0;
+}
+
+void main_menu() {
+  logger.enter_fn(__func__);
+
+  new_screen();
+  print_menu(MAIN_MENU);
+
+  logger.exit_fn();
 }
