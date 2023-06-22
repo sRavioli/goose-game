@@ -11,7 +11,7 @@
 #include <stdio.h>
 
 void set_username(Player *pl, const char *username) {
-  snprintf(pl->username, MAX_USERNAME_LENGTH + 1, "%s.3", username);
+  snprintf(pl->username, MAX_USERNAME_LENGTH + 1, "%s", username);
 }
 const char *get_username(const Player *pl) { return pl->username; }
 
