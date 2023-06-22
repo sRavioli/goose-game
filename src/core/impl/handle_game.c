@@ -192,7 +192,7 @@ Players *create_players(const int num_players) {
   while (i < num_players) {
     Player *pl = (Player *)malloc(sizeof(Player));  // NOLINT
     if (!pl) {
-      logger.exit_fn();
+      logger.stop();
       throw_err(ALLOCATION_ERROR);
     }
 
