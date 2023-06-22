@@ -1,4 +1,4 @@
-## Unreleased ([b943ac4..ef67544](https://github.com/sRavioli/goose-game/compare/b943ac4..ef67544))
+## Unreleased ([b943ac4..de034cb](https://github.com/sRavioli/goose-game/compare/b943ac4..de034cb))
 #### Bug Fixes
 - **(docs)** use markdown syntax - ([e3a9440](https://github.com/sRavioli/goose-game/commit/e3a94402642058e28761e5e603a28da1dc454751)) - [@sRavioli](https://github.com/sRavioli)
 - **(mask)** use powershell, fix run command - ([6c1dab7](https://github.com/sRavioli/goose-game/commit/6c1dab7fa7024af051e718295a94f7fd56a103e8)) - [@sRavioli](https://github.com/sRavioli)
@@ -46,6 +46,7 @@
 - add miscellaneous files - ([d7a442f](https://github.com/sRavioli/goose-game/commit/d7a442f85f8b6761caae7d9f6032c742234ef144)) - [@sRavioli](https://github.com/sRavioli)
 - add project resources - ([0dcc1bd](https://github.com/sRavioli/goose-game/commit/0dcc1bd1e84711ce1ca267b9651757dc1f8c098c)) - [@sRavioli](https://github.com/sRavioli)
 #### Miscellaneous Chores
+- create changelog - ([de034cb](https://github.com/sRavioli/goose-game/commit/de034cbc305539de9e96eeaf40013f5f2a46a9e4)) - [@sRavioli](https://github.com/sRavioli)
 - add project resources - ([2d27490](https://github.com/sRavioli/goose-game/commit/2d274900ff6ff617d7878ec40a24f440301da980)) - [@sRavioli](https://github.com/sRavioli)
 - add `.gitignore` for C - ([0d661d8](https://github.com/sRavioli/goose-game/commit/0d661d82bba233e0568aa6be8ad88d49198527cb)) - [@sRavioli](https://github.com/sRavioli)
 #### Refactoring
