@@ -1,0 +1,179 @@
+FUNZIONI PER LA MANIPOLAZIONE DELLE STRINGHE
+============================================
+
+
+Questo file definisce delle funzioni utili per manipolare le stringhe.
+
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+MAX_BUFFER_LEN := 256  // Lunghezza massima consentita di una stringa
+
+FILLER_CHAR := '?'  // Carattere con cui riempire un username troppo corto
+LINE_END := '\n'    // Carattere che indica il termine di una riga
+STR_END := '\0'     // Carattere che indica il termine di una stringa
+CH_EMPY := ''       // Carattere che indica il carattere vuoto
+CH_SPACE := ' '     // Carattere che indica il carattere spazio
+
+-------------------------------------------------------------------------------
+
+FUNZIONE str_length()
+=====================
+
+Trova la lunghezza della stringa che riceve in input.
+
+INPUT:
+- source, la stringa di cui trovare la lunghezza, stringa.
+
+OUTPUT:
+- length, lunghezza calolata della stringa, intero maggiore o uguale a zero.
+
+ALGORITMO:
+length := 0
+MENTRE (elemento in pos. length di stringa <> STR_END)
+  length := length + 1
+FINE MENTRE
+
+
+FUNZIONE str_concat()
+=====================
+
+Concatena due stringhe tra di loro.
+
+INPUT:
+- buffer, stringa a cui verrà concatenata la source, stringa;
+- source, stringa da concatenare alla stringa buffer, stringa.
+
+OUTPUT:
+- buffer, la stringa modificata dalla concatenazione di source, stringa.
+
+LAVORO:
+- i, contatore per iterare sulla lunghezza di buffer, intero maggiore di zero;
+- j, contatore per iterare sulla lunghezza di source, intero maggiore o uguale a zero.
+
+ALGORITMO:
+i := string_length(buffer)
+j := 0
+MENTRE(elemento j-esimo di source <> STR_END)
+  elemento in posizione i di buffer := elemento in posizione j di source
+  i := i + 1
+  j := j + 1
+FINE MENTRE
+// ensure string termination
+elemento i-esimo di buffer := STR_END 
+
+
+FUNZIONE str_nconcat()
+======================
+
+Concatena una stringa n volte ad un'altra stringa.
+
+INPUT:
+- buffer, stringa a cui concatenare n_times volte la stringa source, stringa;
+- source, stringa da concatenare n_times volte alla stringa buffer, stringa;
+- n_times, quante volte concatenare source a buffer, intero maggiore di zero.
+
+OUTPUT:
+- buffer, stringa con source concatenato per n_times volte, stringa.
+
+LAVORO:
+- i, contatore per iterare n_times volte, intero maggiore o uguale a zero;
+- j, contatore per iterare su buffer, intero maggiore di zero;
+- k, contatore per iterare sugli elementi di source, intero maggiore o uguale a zero.
+
+ALGORITMO:
+i := 0
+MENTRE (i < n_times)
+  j := str_length(buffer) // initialize to length of buffer
+  k := 0
+  str_concat(buffer, source)
+  i := i + 1
+FINE MENTRE
+elemento in posizione i di buffer := STR_END // terminate the string
+
+
+FUNZIONE str_compare()
+======================
+
+Confronta due stringhe carattere per carattere e verifica se sono uguali.
+
+INPUT:
+- string1, prima stringa da confrontare, stringa;
+- string2, seconda stringa da confrontare, stringa.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se le stringhe
+  sono uguali e FALSE altrimenti.
+
+LAVORO:
+- string1_len, lunghezza calcolata della stringa string1, intero maggiore di zero;
+- str2_len, lunghezza calcolata della stringa string2, intero maggiore di zero;
+- i, contatore per iterare sulla prima stringa, intero maggiore o uguale a zero.
+
+ALGORITMO:
+// different length == different strings
+string1_len := str_length(string1)
+SE (string1_len <> str_length(string2)) ALLORA 
+  result := FALSE
+FINE SE
+i := 0
+MENTRE (i < string1_len)
+  SE (carattere in pos. i di string1 <> carattere in pos. i di string1) ALLORA 
+    result := FALSE
+  ALTRIMENTI 
+    result := TRUE
+  FINE SE
+  i := i + 1
+FINE MENTRE
+
+
+
+FUNZIONE str_copy()
+===================
+
+Crea una copia della stringa ricevuta in input.
+
+INPUT:
+- source, stringa di origine da copiare, stringa.
+
+OUTPUT:
+- copied_string, stringa copiata carattere per carattere, stringa.
+
+LAVORO:
+- i, contatore per iterare sulla lunghezza della stringa di origine, intero maggiore o uguale a zero;
+
+ALGORITMO:
+i := 0
+MENTRE (i < str_length(source))
+  // copy chars one by one
+  elemento in pos. i di copied_string := elemento in pos. i di source
+  i := i + 1
+FINE MENTRE
+elemento in pos. i di copied_string := STR_END // terminate the string
+
+
+FUNZIONE str_truncate()
+=======================
+
+Tronca una stringa all'indice dato
+
+INPUT:
+- source, stringa da troncare al carattere specificato, stringa;
+- idx, indice che rappresenta il carattere a cui troncare, intero maggiore di zero;
+
+OUTPUT:
+- buffer, stringa troncata all'indice idx, stringa;
+
+ALGORITMO:
+SE (idx < str_length(source)) ALLORA 
+  buffer := source
+FINE SE
+
+i := 0
+MENTRE (i < idx)
+  carattere in pos. i di source := carattere in pos. i di buffer
+  i := i + 1
+FINE MENTRE
+carattere in pos. i di buffer := STR_END
