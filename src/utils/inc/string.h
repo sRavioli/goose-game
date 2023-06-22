@@ -48,12 +48,12 @@
 /**
  *  @brief The character that defines an empty string.
  */
-#define STR_EMPTY ""
+#define CH_EMPTY ""
 
 /**
  *  @brief The default value that a space assumes.
  */
-#define SPACE_CHAR ' '
+#define CH_SPACE ' '
 
 // -------------------------------------------------------------------------- //
 // -------------------------------------------------------------------------- //
