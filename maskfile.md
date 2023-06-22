@@ -10,9 +10,9 @@ gcc $(find . -regex '.*/.*\.\(c\)$') -o bin/main
 echo "Built  main.c"
 ```
 
-```pwsh
+```powershell
 [System.IO.Directory]::CreateDirectory("./bin/")
-gcc $(Get-ChildItem -Recurse -Path . -Filter *.c -Exclude .\tests\).fullname `
+gcc $(Get-ChildItem -Recurse -Path ./src/ -Filter *.c -Exclude .\tests\).fullname `
     -o ./bin/main.exe
 ```
 
@@ -24,4 +24,9 @@ Searches for `src/main.c` and builds it.
 
 ```bash
 mask build && ./bin/main
+```
+
+```powershell
+mask build 
+./bin/main
 ```
