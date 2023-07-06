@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.1.1](https://github.com/sRavioli/goose-game/compare/0.1.0..0.1.1) - 2023-07-06
+#### Bug Fixes
+- **(cog)** use latest cog syntax - ([ab9b8cf](https://github.com/sRavioli/goose-game/commit/ab9b8cf58d81e24f84100f2849fffa5f27ba47f9)) - [@sRavioli](https://github.com/sRavioli)
+#### Features
+- **(github)** add auto release workflow - ([cf10851](https://github.com/sRavioli/goose-game/commit/cf10851ae00b9464c4d102392bfeda0f22063128)) - [@sRavioli](https://github.com/sRavioli)
+#### Miscellaneous Chores
+- update and correct changelog - ([0bcf4c8](https://github.com/sRavioli/goose-game/commit/0bcf4c869ffd7e61c5b471f466ddd5ad7cc487ad)) - [@sRavioli](https://github.com/sRavioli)
+
+- - -
+
 
 ## [0.1.0](https://github.com/sRavioli/goose-game/compare/b943ac4953934f63f7e0f02a7acad99870a326ad..0.1.0) - 2023-06-22
 
