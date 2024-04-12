@@ -42,4 +42,4 @@ presenti in [logger.h](./src/common/inc/logger.h) e [logger.c](./src/common/impl
 
 ## Licenza
 
-La licenza è la GNU-GPLv3.0 ([LICENSE.txt](./LICENSE.txt) )
+La licenza è la GNU-GPLv3.0 ([LICENSE.txt](./LICENSE.txt))
