@@ -1,0 +1,89 @@
+TIPO DI DATO GAMESTATES
+=======================
+
+Il tipo di dato GameStates deve essere rappresentato come un record composto da:
+- un vettore che rappresenti le partite salvate;
+- un intero che rappresenti il numero di partite salvate.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI RELATIVE AL TIPO DI DATO GAMESTATES
+--------------------------------------------
+
+MAX_SAVED_GAMES := 5 // Il numero massimo possibile di partite salvate
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD GameStates:
+- games, lista di partite salvate, array unidimensionale di GameState di lunghezza
+  massima di MAX_SAVED_GAMES;
+- num_games, numero di partite presenti nell'array, intero positivo.
+
+FUNZIONI DI ACCESSO
+===================
+
+Le seguenti funzioni permettono l'accesso alle informazioni del tipo di dato GameStates:
+
+FUNZIONE get_game()
+===================
+
+Restituisce il valore del campo game del record GameStates all'indice
+dato.
+
+INPUT:
+- game_states, lista di partite salvate di cui leggere la singola partita, GameStates;
+- index, indice al quale leggere la singola partita, intero.
+
+OUTPUT:
+- game, valore della singola partita della lista di partite salvate all'indice dato, GameState.
+
+ALGORITMO:
+game := valore del campo game alla posizione index di game_states
+
+FUNZIONE set_game()
+===================
+
+Aggiorna il valore del campo game del record GameStates all'indice dato, con quello ricevuto.
+
+INPUT:
+- game_states, lista di partite salvate di cui aggiornare la singola partita, GameStates;
+- index, indice al quale aggiornare il valore del campo game, intero;
+- game, valore la singola partita da impostare all'indice dato, GameState.
+
+OUTPUT:
+- game_states, lista di partite salvate col valore aggiornato della singola partita, GameStates.
+
+ALGORITMO:
+valore del campo game alla posizione index di game_states := game
+
+FUNZIONE get_num_games()
+========================
+
+Restituisce il valore del campo num_games del record GameStates.
+
+INPUT:
+- game_states, lista di partite salvate di cui leggere il numero di partite, GameStates.
+
+OUTPUT:
+- num_games, valore del numero di partite della lista di partite salvate, intero positivo.
+
+ALGORITMO:
+num_games := valore del campo num_games di game_states
+
+FUNZIONE set_num_games()
+========================
+
+Aggiorna il valore del campo num_games del record GameStates con quello ricevuto.
+
+INPUT:
+- game_states, lista di partite salvate di cui aggiornare il numero di partite, GameStates;
+- num_games, valore del numero di partite da impostare, intero positivo.
+
+OUTPUT:
+- game_states, lista di partite salvate col valore aggiornato di numero di partite, GameStates.
+
+ALGORITMO:
+valore del campo num_games di game_states := num_games
+

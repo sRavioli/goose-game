@@ -1,0 +1,8 @@
+LISTA DELLE COSTANTI GLOBALI
+============================
+
+Lista delle costanti globali con loro valore assunto e breve descrizione:
+FALSE := 0 // indica il valore intero che viene considerato come "falso" nei controlli;
+TRUE := NOT(FALSE) // indica il valore intero che viene considerato come "vero" nei controlli.
+
+INDEX_NOT_FOUND := -1 // Indica che l'indice non è stato trovato

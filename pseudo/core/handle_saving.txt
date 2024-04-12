@@ -1,0 +1,272 @@
+MODULO PER LA GESTIONE DEI SALVATAGGI
+=====================================
+
+Costanti definite in questo modulo:
+- SAVED_GAMES_FILEE := "../data/saved_games.bin", file su cui salvare le partite;
+- MAX_SAVED_GAMES := 5, numero massimo di partite salvate;
+- NO_SAVED_GAMES := 0, indica che non ci sono salvataggi presenti;
+- QUIT_GAME := -1, indica che l'utente ha scelto di uscire senza procedere con il lancio del salvataggio;
+
+-------------------------------------------------------------------------------
+
+FUNZIONE write_save()
+=====================
+Salva la partita corrente nel file se c'è non ci sono piu di MAX_SAVED_GAMES, altrimenti chiede quale salvataggio sovrascrivere.
+
+INPUT:
+- gs , stato della partita corrente da salvare, Gamestate;
+
+OUTPUT:
+- nullo, non ha output;
+
+LAVORO:
+- file_gss, stati dei salvataggi gia presenti , Gamestates;
+- num_saves, numero di salvataggi presenti, intero;
+- index, indice in cui sovrascrivere il salvataggio, intero;
+
+ALGORITMO:
+
+file_gss := read_saves(file_gss)
+num_saves := get_num_games(gss)
+
+SE (num_saves >= NO_SAVED_GAMES AND num_saves < MAX_SAVED_GAMES) ALLORA
+  file_gss := set_gamestate(file_gss,gs,get_num_games(file_gss))
+  file_gss := set_num_games(file_gss,num_saves + 1)
+ALTRIMENTI SE (num_saves = MAX_SAVED_GAMES) ALLORA
+  new_screen()
+  stampare_a_video("Max number of saves reached, you need to choose a game to delete")
+  index := choose_save(file_gss)
+  file_gss := set_gamestate(file_gss,gs,index)
+FINE
+
+SE (ApriFile(SAVED_GAMES_FILE) = NULL) ALLORA
+  throw_err(FILE_NOT_WRITABLE_ERROR);
+ALTRIMENTI
+  scrivere_su_file(file_gss)
+  chiudere_file(SAVED_GAMES_FILE)
+FINE
+
+FUNZIONE saved_games()
+============================
+Mostra tutti i salvataggi e fa scegliere all'utente quale desidera riprendere a giocare.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- index, quale partita salvata avviare, intero;
+- gss, le partite salvate in precedenza, Gamestates;
+- gs, lo stato della partita scelta da lanciare, Gamestate;
+- pls, quanti e quali giocatori partecipano alla partita, Players;
+- pl, giocatore che partecipa alla partita, Player;
+- board, tabellone di gioco su cui si svolge la partita, Board.
+- game_board, tabellone con le caselle speciali.
+- j, indice per scorrere i players, intero >0;
+- key, catattere per acquisire la scelta del giocatore, carattere;
+- display, indica se continuare a mostrare o chiedere di uscire inserendo la scelta, booleana che assume valore TRUE o FALSE
+
+ALGORITMO:
+gss := read_saves(gss)
+SE (get_num_games(gss) = 0) ALLORA
+  print_err(NO_SAVES)
+  stampare_a_video("Exit this view by pressing b/ESC/ENTER/SPACEBAR")
+  display := TRUE
+  MENTRE (display = TRUE)
+    key := leggere_carattere()
+    SE (is_back_key(key))
+      ALLORA display := FALSE
+    FINE
+  FINE
+
+ALTRIMENTI SE (get_num_games(gss) = 1) ALLORA
+  stampare_a_video("Found only the following game: ")
+  gs := get_gamestate(gss, 1)
+  pls := get_players(gs)
+  board := get_board(gs)
+
+  stampare_a_video(get_game_name(gs))
+  stampare_a_video("players : [")
+  j := 1
+  MENTRE (j < get_players_num(pls))
+    pl := get_player(pls,j)
+    stampare_a_video(get_username(pl))
+    stampare_a_video("pos. ")
+    stampare_a_video(get_position(pl)+1)
+    SE (j < get_players_num(pls) - 1) ALLORA
+      stampare_a_video(", ")
+    FINE
+    j := j + 1
+  FINE
+  stampare_a_video("]")
+  stampare_a_video("board with ")
+  stampare_a_video(get_dim(board))
+  stampare_a_video(" squares")
+
+  stampare_a_video("launch this game? (y/n) ")
+  stampare_a_video("> ")
+
+  ESEGUI
+    key := leggere_carattere()
+    SE (key <> 'y' AND key <> 'n')
+        ALLORA print_err(INVALID_INPUT_ERROR)
+        stampare_a_video("> ")
+    FINE
+  FINCHE (key <> 'y' AND key <> 'n')
+
+  SE (key = 'y') ALLORA
+    game_board := build_board(board, DEFAULT_COLS, DEFAULT_SQUARE_LEN, BORDERS)
+    wait_keypress("press to launch the game")
+    game_loop(pls, board, game_board)
+  ALTRIMENTI
+    wait_keypress("press to go back to the menu")
+  FINE
+
+ALTRIMENTI
+  new_screen()
+  stampare_a_video("Many games found")
+  index := choose_save(gss);
+  gs := get_gamestate(gss,index)
+  pls := get_players(gs)
+  board := get_board(gs)
+  game_board := build_board(board, DEFAULT_COLS, DEFAULT_SQUARE_LEN, BORDERS);
+
+  game_loop(pls,board,game_board)
+FINE
+
+
+FUNZIONE read_saves()
+=====================
+Legge i salvataggi gia presenti sul file.
+
+INPUT:
+- gss , stati dei giochi salvati , Gamestates;
+
+OUTPUT:
+- nullo, non ha output;
+
+ALGORITMO:
+SE (aprire_file(SAVED_GAMES_FILE) = NULL) ALLORA
+  throw_err(FILE_NOT_READABLE_ERROR);
+FINE
+
+SE (is_file_empty(SAVED_GAMES_FILE)) ALLORA
+  gss := set_num_games(gss,NO_SAVED_GAMES)
+ALTRIMENTI
+  gss  := leggere_da_file(SAVED_GAMES_FILE)
+FINE
+chiudere_file(SAVED_GAMES_FILE)
+FINE
+
+
+FUNZIONE save_game()
+====================
+Chiede il nome con cui salvare la partita in corso e la salva su file binario.
+
+INPUT:
+- pls,giocatori che partecipano alla partita, Players;
+- board, tabellone di gioco su cui si svolge la partita, Board.
+
+OUTPUT:
+- nullo, non ha output;
+
+LAVORO:
+- game_name, nome con cui salvare la partita in corso, array di caratteri di dimensione MAX_BUFFER_LEN
+- gs, struttura di salvataggio del gioco, Gamestate;
+
+ALGORITMO:
+
+stampare_a_video("Insert the name of the save: ")
+game_name := leggere_da_tastiera()
+
+gs := set_players(gs,pls)
+gs := set_board(gs,board)
+gs := set_game_name(gs,game_name)
+
+write_save(gs)
+FINE
+
+FUNZIONE choose_save()
+====================
+Mostra tutti i salvataggi presenti e fa scegliere uno all'utente.
+
+INPUT:
+- gss , tutti gli stati dei salvataggi presenti, Gamestates;
+
+OUTPUT:
+- input , indice del salvataggio scelto oppure QUIT_GAME se l'utente desidera non scegliere ed uscire, intero;
+
+LAVORO:
+- num_saves, numero di salvataggi presenti,intero;
+- Gs, stato di un salvataggio da iterare per far scegliere all'utente, Gamestate;
+- Pls, giocatori di un salvataggio da iterare per far scegliere all'utente, Players;
+- board, tabellone di un salvataggio da iterare per far scegliere all'utente, Board;
+- pl, Giocatore di un salvataggio da iterare per far scegliere all'utente, Player;
+- input, indice in caratteri scelto dall'utente, array di caratteri di dimensione MAX_BUFFER_LEN;
+- buffer, per ricevere la scelta dell'utente se desidera uscire, array di caratteri
+- invalidInput, variabile che ci indica se continuare a ciclare se l'input ricevuto non è valido, booleana che assume valore TRUE o FALSE
+
+ALGORITMO:
+
+stampare_a_video("Please select a save from the following ones:")
+num_saves := get_num_games(gss)
+i := 1
+MENTRE (i < num_saves)
+  gs := get_gamestate(gss,i)
+  pls := get_players(gs)
+  board := get_board(gs)
+
+  stampare_a_video(i)
+  stampare_a_video(":")
+  stampare_a_video(get_game_name(gs))
+  stampare_a_video("Players : ")
+  stampare_a_video(i)
+  stampare_a_video(get_players_num(pls))
+  stampare_a_video("[")
+
+  j := 1
+
+  MENTRE (j < get_players_num(pls))
+    pl := get_player(pls,j)
+    stampare_a_video(get_username(pl))
+    stampare_a_video("pos ")
+    stampare_a_video(get_position(pl))
+    SE (j < get_players_num(pls)-1)
+      ALLORA  stampare_a_video(", ")
+    FINE
+    j := j + 1
+  FINE
+
+  stampare_a_video("]")
+  stampare_a_video("board with ")
+  stampare_a_video(get_dim(board))
+  stampare_a_video(" squares")
+  i := i + 1
+FINE
+stampare_a_video("Select a game or [q]uit and go back to the menu")
+stampare_a_video(">")
+invalidInput := FALSE
+ESEGUI
+  buffer := leggere_da_tastiera()
+  SE (elemento di buffer in posizione 1 = 'q')
+     ALLORA input = QUIT_GAME
+            Interrompi
+  FINE
+  SE (elemento di buffer in posizione 1 < '0' OR elemento di buffer in posizione 1 > '9') ALLORA
+    invalidInput := TRUE
+    print_err(INVALID_INPUT_ERROR)
+    stampare_a_video("> ")
+    Continua
+  FINE
+  input := atoi(buffer)
+  SE (input < NO_SAVED_GAMES OR input > get_num_games(gss) - 1)
+     ALLORA invalidInput := TRUE
+            print_err(INVALID_GAME)
+            stampare_a_video("> ")
+     ALTRIMENTI invalidInput := FALSE
+  FINE
+FINCHE (invalidInput = TRUE)
+FINE
+

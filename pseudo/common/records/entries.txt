@@ -1,0 +1,87 @@
+TIPO DI DATO ENTRIES
+====================
+
+Il tipo di dato Entries deve essere rappresentato come un record composto da:
+- un vettore di Entry che rappresenti le voci della classifica;
+- un intero che rappresenti la lunghezza del vettore.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI RELATIVE AL TIPO DI DATO ENTRIES
+-----------------------------------------
+
+MAX_ENTRIES := 10 // Il numero massimo consentito di voci di classifica
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD Entries:
+- entries, voci della classifica, array unidimensionale di Entry;
+- num_entries, numero di voci presenti in classifica, intero positivo.
+
+FUNZIONI DI ACCESSO
+===================
+
+FUNZIONE get_num_entries()
+==========================
+
+Restituisce il valore del campo num_entries del record Entries.
+
+INPUT:
+- entries, lista di voci di classifica di cui leggere il numero di voci, Entries.
+
+OUTPUT:
+- num_entries, valore del il numero di voci del lista di voci di classifica, intero positivo.
+
+ALGORITMO:
+num_entries := valore del campo num_entries di entries
+
+FUNZIONE set_num_entries()
+==========================
+
+Aggiorna il valore del campo num_entries del record Entries con quello ricevuto.
+
+INPUT:
+- entries, lista di voci di classifica di cui aggiornare il numero di voci, Entries;
+- num_entries, valore del il numero di voci da impostare, intero positivo.
+
+OUTPUT:
+- entries, lista di voci di classifica col valore aggiornato di il numero di voci, Entries.
+
+ALGORITMO:
+valore del campo num_entries di entries := num_entries
+
+FUNZIONE get_entry()
+====================
+
+Restituisce il valore del campo entry del record Entries all'indice
+dato.
+
+INPUT:
+- entries, lista di voci di classifica di cui leggere la singola voce, Entries;
+- index, indice al quale leggere la singola voce, intero.
+
+OUTPUT:
+- entry, valore del la singola voce del lista di voci di classifica all'indice dato, Entry.
+
+ALGORITMO:
+entry := valore del campo entry alla posizione index di entries
+
+FUNZIONE set_entry()
+====================
+
+Aggiorna il valore del campo entry del record Entries all'indice dato con quello
+ricevuto.
+
+INPUT:
+- entries, lista di voci di classifica di cui aggiornare la singola voce, Entries;
+- index, indice al quale aggiornare il valore del campo entry, intero;
+- entry, valore la singola voce da impostare all'indice dato, Entry.
+
+OUTPUT:
+- entries, lista di voci di classifica col valore aggiornato di la singola voce, Entries.
+
+ALGORITMO:
+valore del campo entry alla posizione index di entries := entry
+

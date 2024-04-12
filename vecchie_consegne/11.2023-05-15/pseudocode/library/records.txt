@@ -1,0 +1,702 @@
+STRUTTURE DATI E RELATIVE FUNZIONI DI ACCCESSO
+==============================================
+
+vedere "../globals.txt"
+
+
+BOARD
+=====
+
+Il tipo di dato Board deve essere rappresentato come un record composto da:
+- un vettore di interi a una dimensione che contenga i valori delle caselle del
+  tabellone di gioco;
+- un numero intero che rappresenti il numero di caselle possedute dal tabellone.
+
+
+RECORD Board:
+- squares, lista di caselle del tabellone di gioco, array a una dimensione con
+  lunghezza minima e massima rispettivamente di MIN_NUM_SQUARES e MAX_NUM_SQUARES;
+- dim, il numero di caselle che il tabellone di gioco possiede, intero che è
+  compreso tra MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Board sono le seguenti:
+- get_square();
+- set_square();
+- get_dim();
+- set_dim().
+
+
+FUNZIONE get_square()
+---------------------
+
+Estrae il valore della casella in una determinata posizione del tabellone di
+gioco.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+- position, posizione da cui estrarre il valore di squares, intero maggiore di
+  zero.
+
+OUTPUT:
+- square, valore della casella nella posizione position, intero.
+
+ALGORITMO:
+square := valore della casella in posizione position del campo squares di board
+
+
+FUNZIONE set_square()
+---------------------
+
+Modifica il valore di una casella del tabellone di gioco.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+- position, posizione della casella del tabellone che dev'essere modificata, intero;
+- value, valore che la casella del tabellone da modificare deve assumere, intero.
+
+OUTPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+
+ALGORITMO:
+casella del campo squares di board in posizione position := value
+
+
+FUNZIONE get_dim()
+------------------
+
+Restituisce il numero di caselle che il tabellone di gioco possiede.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+
+OUTPUT:
+- dim, il numero di caselle che il tabellone di gioco possiede. Intero che
+  è compreso tra MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+ALGORITMO:
+dim := valore del campo dim di board
+
+
+FUNZIONE set_dim()
+------------------
+
+Imposta il numero di caselle che il tabellone di gioco deve avere.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+- dimension, valore che la dimensione del tabellone deve assumere, intero.
+
+OUTPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+
+ALGORITMO:
+valore del campo dim di board := dimension
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+PLAYER
+======
+
+Il tipo di dato Player deve essere rappresentato come un record composto da:
+- una stringa che rappresenta l'username che il giocatore ha scelto;
+- un numero intero che rappresenti il valore della posizione del giocatore
+  all'interno del tabellone di gioco;
+- un numero intero che rappresenti il punteggio del giocatore;
+- un numero intero che rappresenti per quanti turni il giocatore è bloccato.
+
+RECORD Player:
+- username, username scelto dell'utente, stringa;
+- position, posizione del giocatore all'interno del tabellone, intero maggiore
+  o uguale a zero;
+- score, punteggio del giocatore, intero maggiore di zero;
+- turns_blocked, indica per quanti turni il giocatore è bloccato, intero che
+  se positivo indica il numero di turni, se negativo indica che il giocatore è
+  bloccato in maniera indefinita.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Player sono le seguenti:
+- get_username();
+- get_position();
+- get_score();
+- get_turns_blocked();
+- set_username();
+- set_position();
+- set_score();
+- set_turns_blocked();
+
+
+FUNZIONE get_username()
+-----------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player.
+
+OUTPUT:
+- username, username scelto dall'utente, stringa.
+
+ALGORITMO:
+username := valore del campo username di Player
+
+
+FUNZIONE get_position()
+-----------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player.
+
+OUTPUT:
+- position, posizione del giocatore all'interno del tabellone, intero maggiore o
+  uguale a zero.
+
+ALGORITMO:
+position := valore del campo position di Player
+
+
+FUNZIONE get_score()
+--------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player.
+
+OUTPUT:
+- score, punteggio del giocatore, intero maggiore di zero.
+
+ALGORITMO:
+score := valore del campo score di Player
+
+
+FUNZIONE get_turns_blocked()
+----------------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player.
+
+OUTPUT:
+- turns_blocked, per quanti turni il giocatore deve restare bloccato, intero.
+
+ALGORITMO:
+turns_blocked := valore del campo turns_blocked di Player
+
+
+FUNZIONE set_username()
+-----------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player;
+- new_username, nuovo username da assegnare al giocatore, stringa.
+
+OUTPUT:
+- player, giocatore con il nome inserito, Player.
+
+ALGORITMO:
+valore del campo username di player = new_username
+
+
+FUNZIONE set_position(),
+-----------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player;
+- position, nuova posizione da assegnare al giocatore, intero maggiore o
+  uguale a zero.
+
+OUTPUT:
+- player, giocatore con la posizione inserita, Player.
+
+ALGORITMO:
+valore del campo position di Player := position
+
+
+FUNZIONE set_score()
+--------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player;
+- score, nuovo punteggio da assegnare al giocatore, intero maggiore di zero.
+
+OUTPUT:
+- player, giocatore con lo score inserito, Player.
+
+
+ALGORITMO:
+valore del campo score di Player := score
+
+
+FUNZIONE set_turns_blocked()
+----------------------------
+
+INPUT:
+- player, giocatore del gioco dell'oca, Player;
+- turns_blocked, numero di turni per cui il giocatore deve restare bloccato,
+  intero.
+
+OUTPUT:
+- player, giocatore con i turn_blocked inseriti, Player.
+
+ALGORITMO:
+valore del campo turns_blocked di Player := turns_blocked
+
+
+
+--------------------------------------------------------------------------------
+
+PLAYERS
+=======
+
+Il tipo di dato Players deve essere rappresentato come un record composto da:
+- un vettore che contiene tutti giocatori;
+- un numero intero che rappresenti la dimensione del vettore di giocatori;
+- un numero intero che rappresenti il turno del giocatore attuale;
+- un vettore che rapprensenta i turni dei giocatori.
+
+RECORD Players:
+- players, array di Players, array a 1 dimensione di Player;
+- players_num, quanti players partecipano alla partita, intero maggiore o uguale
+  di MIN_NUM_PLAYERS AND minore o uguale di MAX_NUM_PLAYERS;
+- turn, turno corrente della partita, intero maggiore di zero;
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Players sono le seguenti:
+- get_players();
+- get_players_num();
+- get_turn();
+- set_players();
+- set_players_num();
+- set_turn();
+
+
+FUNZIONE get_players()
+----------------------
+
+INPUT:
+- players, vettore di giocatori, Players;
+- pos, posizione in cui leggere il player, intero maggiore o uguale di
+  MIN_NUM_PLAYERS AND minore o uguale di MAX_NUM_PLAYERS;
+
+OUTPUT:
+- player, player di players in posizione data, Player.
+
+ALGORITMO:
+player := valore di Players in posizione pos
+
+FUNZIONE set_players()
+----------------------
+
+INPUT:
+- players, vettore di giocatori, Players;
+- pos, posizione in cui scrivere il giocatore, intero maggiore o uguale di
+  MIN_NUM_PLAYERS AND minore o uguale di MAX_NUM_PLAYERS;
+- player, player da scrivere nel vettore di players, Player;
+
+OUTPUT:
+- players, vettore di players con il player aggiunto, Players.
+
+ALGORITMO:
+valore del campo players in posizione pos := player
+
+FUNZIONE get_players_num()
+--------------------------
+
+INPUT:
+- player, vettore di player, Players.
+
+OUTPUT:
+- players_num, intero che rapprensenta il numero di player presenti, intero
+  maggiore o uguale di MIN_NUM_PLAYERS AND minore o uguale di MAX_NUM_PLAYERS.
+
+ALGORITMO
+players_num = valore del campo players_num di players
+
+FUNZIONE set_players_num()
+--------------------------
+
+INPUT:
+- player, vettore di player, Players;
+- players_num, numero di giocatori da scrivere, intero maggiore o uguale di
+  MIN_NUM_PLAYERS AND minore o uguale di MAX_NUM_PLAYERS.
+
+OUTPUT:
+- players, vettore di player con la dimensione scritta, Player.
+
+ALGORITMO
+valore del campo players_num di players := players_num
+
+FUNZIONE get_turn()
+-------------------
+
+INPUT:
+- players, vettore di player, Players;
+
+OUTPUT:
+- turn, turno attuale del gioco, intero maggiore di zero.
+
+ALGORITMO
+turn := valore del campo turn di players
+
+FUNZIONE set_turn()
+-------------------
+
+INPUT:
+- players, vettore di player, Players;
+- turn, valore del turno attuale da scrivere, intero maggiore di zero.
+
+OUTPUT:
+- players, vettore di players con il turno attuale scritto, Players.
+
+ALGORITMO
+valore del campo turn di players := turn
+
+
+
+--------------------------------------------------------------------------------
+
+
+ENTRY
+=====
+
+Il tipo di dato Entry deve essere rappresentato come un record composto da:
+- una stringa contenente l'username del giocatore;
+- un numero intero che rappresenti il punteggio del giocatore.
+
+RECORD Entry:
+- name, nome utente del giocatore, stringa con lunghezza massima di
+  MAX_USERNAME_LENGTH + 1;
+- score, punteggio del giocatore, intero.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Board sono le seguenti:
+- get_name();
+- get_score();
+- set_name();
+- set_score().
+
+
+FUNZIONE get_name()
+===================
+
+INPUT:
+- entry, struttura contenente nome utente e punteggio, Entry.
+
+OUTPUT:
+- name, username del giocatore, stringa.
+
+ALGORITMO:
+name := valore del campo name di entry
+
+FUNZIONE get_score()
+====================
+
+INPUT:
+- entry, struttura contenente nome utente e punteggio, Entry.
+
+OUTPUT:
+- score, punteggio del giocatore, intero.
+
+ALGORITMO:
+score := valore del campo score di entry
+
+FUNZIONE set_name()
+===================
+
+INPUT:
+- entry, struttura contenente nome utente e punteggio, Entry;
+- name, username da assegnare al giocatore, stringa;
+
+OUTPUT:
+- entry, struttura contenente nome utente e punteggio, Entry.
+
+ALGORITMO:
+valore del campo name di entry := name
+
+FUNZIONE set_score()
+====================
+
+INPUT:
+- entry, struttura contenente nome utentee punteggio, Entry;
+- score, punteggio da assegnare al giocatore, intero;
+
+OUTPUT:
+- entry, struttura contenente nome utente, Entry.
+
+ALGORITMO:
+valore del campo score di entry := score
+
+
+--------------------------------------------------------------------------------
+
+
+ENTRIES
+=======
+
+Il tipo di dato Entries deve essere rappresentato come un record composto da:
+- un vettore di Entry a una dimensione;
+- un numero intero che rappresenti la lunghezza del vettore.
+
+
+RECORD Entries:
+- entries, vettore di Entry, array a una dimensione di Entry;
+- num_entries, numero di elementi all'intero di entries, intero.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Board sono le seguenti:
+- get_entry();
+- get_num_entries();
+- set_entry();
+- set_num_entries();
+
+FUNZIONE get_entry()
+====================
+
+INPUT:
+- entries, lista di Entry, Entries.
+
+OUTPUT:
+- entry, valore della singola entry, Entry.
+
+ALGORITMO:
+entry := valore del campo entry di entries
+
+FUNZIONE set_entry()
+====================
+
+INPUT:
+- entries, lista di Entry, Entries;
+- entry, valore di una coppia username-score, Entry;
+
+OUTPUT:
+- entries, lista di entry, Entries
+
+ALGORITMO:
+valore del campo entry di entries := entry
+
+FUNZIONE get_num_entries()
+==========================
+
+INPUT:
+- entries, lista di Entry, Entries.
+
+OUTPUT:
+- num_entries, numero di coppie username-score presenti nel vettore, intero.
+
+ALGORITMO:
+num_entries := valore del campo num_entries di entries
+
+FUNZIONE set_num_entries()
+==========================
+
+INPUT:
+- entries, lista di Entry, Entries;
+- num_entries, numero di coppie username-score presenti nel vettore, intero;
+
+OUTPUT:
+- entries, lista di Entry, Entries
+
+ALGORITMO:
+valore del campo num_entries di entries := num_entries
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+GAME
+====
+
+Il tipo di dato Game deve essere rappresentato come un record composto da:
+- una stringa contente il nome della partita;
+- una struttura contenente i giocatori della partita;
+- una struttura contenente il tabellone di gioco.
+
+
+RECORD Game:
+- game_name, nome della partita, stringa;
+- players, i giocatori del gioco dell'oca, Players;
+- board, tabellone di gioco, Board.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Game sono le seguenti:
+- get_game_name();
+- set_game_name();
+- get_game_players();
+- set_game_players();
+- get_game_board();
+- set_game_board().
+
+
+FUNZIONE get_game_name()
+========================
+
+INPUT:
+- game, struttura che rappresenta una partita, Game.
+
+OUTPUT:
+- game_name, nome della partita, stringa.
+
+ALGORITMO:
+game_name := valore del campo game_name di game
+
+FUNZIONE set_game_name()
+========================
+
+INPUT:
+- game, partita di cui aggiornare il campo set_game_name, Game;
+- game_name, nome della partita da impostare, stringa;
+
+OUTPUT:
+- game, partita col campo game_name aggiornato, Game.
+
+ALGORITMO:
+valore del campo set_game_name di game := game_name
+
+FUNZIONE get_game_players()
+===========================
+
+INPUT:
+- game, struttura che rappresenta una partita, Game.
+
+OUTPUT:
+- players, struttura che contiene tutte le informazioni sui giocatori, Players.
+
+ALGORITMO:
+players := valore del campo players di game
+
+FUNZIONE set_game_players()
+===========================
+
+INPUT:
+- game, partita di cui aggiornare il campo players, Game;
+- players, informazioni sui giocatori da impostare, Players;
+
+OUTPUT:
+- game, partita col campo players aggiornato, Game.
+
+ALGORITMO:
+valore del campo players di game := players
+
+FUNZIONE get_game_board()
+=========================
+
+INPUT:
+- game, struttura che rappresenta una partita, Game.
+
+OUTPUT:
+- board, tabellone di gioco su cui si svolgerà la partita, Board.
+
+ALGORITMO:
+board := valore del campo board di game
+
+FUNZIONE set_game_board()
+=========================
+
+INPUT:
+- game, partita di cui aggiornare il campo board, Game;
+- board, tabellone di gioco da impostare, Board;
+
+OUTPUT:
+- game, partita col campo board aggiornato, Game.
+
+ALGORITMO:
+valore del campo board di game := board
+
+
+
+--------------------------------------------------------------------------------
+
+
+
+GAMES
+=====
+
+Il tipo di dato Games deve essere rappresentato come un record composto da:
+- un vettore di strutture Game a una dimesione;
+- un intero che rappresenti il numero di strutture presenti nel vettore;
+
+RECORD Games:
+- games, lista delle partite, array a una dimensione di strututre Game;
+- num_games, numero di partite, intero maggiore di zero.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Games sono le seguenti:
+- get_game();
+- set_game();
+- get_num_games();
+- set_num_games().
+
+FUNZIONE get_game()
+===================
+
+INPUT:
+- games, lista di partite, Games;
+- index, indice della partita desiderata, intero maggiore di zero.
+
+OUTPUT:
+- game, la singola partita all'indice indicato, Game.
+
+ALGORITMO:
+game := valore alla posizione index del campo game di games
+
+FUNZIONE set_game()
+===================
+
+INPUT:
+- games, lista di partite di cui aggiornare il campo game, Games;
+- game, partita da impostare, Game;
+- index, indice in cui scrivere la partita game, intero maggiore di zero.
+
+OUTPUT:
+- games, lista di partite col campo game aggiornato, Games.
+
+ALGORITMO:
+valore del campo game alla posizione index di games := game
+
+FUNZIONE get_num_games()
+========================
+
+INPUT:
+- games, lista di partite, Games.
+
+OUTPUT:
+- num_games, numero di partite presenti, intero maggiore di zero.
+
+ALGORITMO:
+num_games := valore del campo num_games di games
+
+FUNZIONE set_num_games()
+========================
+
+INPUT:
+- games, lista di partite di cui aggiornare il campo num_games, Games;
+- num_games, numero di partite da impostare, intero maggiore di zero;
+
+OUTPUT:
+- games, lista di partite col campo num_games aggiornato, Games.
+
+ALGORITMO:
+valore del campo num_games di games := num_games

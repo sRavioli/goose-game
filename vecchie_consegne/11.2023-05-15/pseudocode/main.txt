@@ -1,0 +1,74 @@
+FILE PRINCIPALE DI GIOCO
+========================
+
+vedere "./globals.txt"
+
+vedere "./library/math.txt"
+vedere "./library/string.txt"
+vedere "./library/globals.txt"
+vedere "./library/records.txt"
+
+vedere "./core/handle_game.txt"
+vedere "./core/handle_help.txt"
+vedere "./core/handle_saved_games.txt"
+vedere "./core/handle_leaderboard.txt"
+
+-------------------------------------------------------------------------------
+
+Costanti definite in questo modulo:
+- MAIN_MENU_FILE := "./menus/main.txt"
+
+-------------------------------------------------------------------------------
+
+FUNZIONE PRINCIPALE
+===================
+
+La funzione principale che permette di avviare il gioco.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- menu_loop, indica se continuare a richiedere l'input utente, booleana che assume
+  valore TRUE se continuare a chiedere e FALSE altrimenti;
+
+ALGORITMO:
+print_main_menu()
+
+menu_loop := TRUE
+MENTRE (menu_loop = TRUE)
+  key := LeggereDaTastiera()
+  SE (key = 'n')
+    ALLORA launch_new_game()
+    ALTRIMENTI SE (key = 's')
+      ALLORA menu_saved_games()
+      ALTRIMENTI SE (key = 'l')
+        ALLORA display_leaderboard()
+        ALTRIMENTI SE (key = "h")
+          ALLORA menu_help()
+          ALTRIMENTI SE (key = 'q')
+            ALLORA menu_loop := FALSE
+          FINE
+        FINE
+      FINE
+    FINE
+  FINE
+FINE
+
+------------------------------------------------------------
+
+FUNZIONE print_main_menu()
+==========================
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+ALGORITMO:
+clear_screen()
+print_from_file(MAIN_MENU_FILE)

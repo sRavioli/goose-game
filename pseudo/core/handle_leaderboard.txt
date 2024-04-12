@@ -1,0 +1,329 @@
+MODULO DI GESTIONE DELLA CLASSIFICA
+===================================
+
+Questo modulo contiene le funzioni per lavorare con la classifica di gioco.
+
+-------------------------------------------------------------------------------
+
+Costanti definite in questo modulo:
+LEADERBOARD_FILE := "../data/leaderboard.bin"
+NO_ENTRIES := 0, indica che non ci sono salvaggi di classifica presenti
+MAX_ENTRIES := 10, indica il numero massimo di giocatori della classifica
+LEADERBOARD_BANNER := "RANK USERNAME SCORE"
+
+-------------------------------------------------------------------------------
+
+FUNZIONE read_leaderboard()
+===========================
+
+Legge le entries della classifica gia presente.
+
+OUTPUT:
+- es, strutture dati con gli entry della classifica salvata, Entries.
+
+ALGORITMO:
+
+SE (aprire_file(LEADERBOARD_FILE)=NULL)
+  ALLORA throw_err(FILE_NOT_READABLE_ERROR)
+FINE
+
+SE (is_file_empty(LEADERBOARD_FILE))
+   ALLORA es := set_num_entries(es,NO_ENTRIES)
+   ALTRIMENTI leggere_da_file(es)
+FINE
+chiudere_file(LEADERBOARD_FILE)
+
+
+FUNZIONE find_duplicate_entry()
+===============================
+Cerca se è presente un altro giocatore nella classifica con lo stesso username del giocatore in input
+
+INPUT:
+- es, struttura dati contentente tutti i giocatori nella classifica,Entries;
+- e, giocatore da cercare se presenti altri con lo stesso username,Entry;
+
+OUTPUT:
+- index, indice del giocatore con lo stesso username del giocatore in input o se non presente il valore e' uguale a INDEX_NOT_FOUND,intero;
+
+LAVORO:
+- ei, giocatore usato per iterare i giocatori presenti, Entry;
+- i, indice da iterare per scorrere i giocatori presenti,intero>0;
+
+ALGORITMO:
+
+index = INDEX_NOT_FOUND
+i := 1
+MENTRE (i < get_num_entries(es))
+  ei := get_entry(es,i)
+  SE (get_name(e) = get_name(ei))
+     ALLORA index := i
+  FINE
+  i := i + 1
+FINE
+
+
+
+FUNZIONE swap_entries()
+=======================
+
+Date due strutture Entry, le scambia di posizione.
+
+INPUT:
+- first, prima struttura da scambiare con la seconda, Entry;
+- second, seconda struttura da scambiare con la prima, Entry.
+
+OUTPUT:
+- first, prima struttura con i valori della seconda, Entry;
+- second, seconda struttura con i valodi della prima, Entry.
+
+LAVORO:
+- temp, struttura temporanea per non perdere i valori,Entry.
+
+ALGORITMO:
+temp := first
+first := second
+second := temp
+
+FUNZIONE rm_duplicate_entries()
+===============================
+
+Data una struttura di tipo Entries, rimuove qualsiasi duplicato presente nella
+stessa, conservando la voce con il punteggio più alto.
+
+INPUT:
+- entries, struttura da cui rimuovere i duplicati, Entries.
+
+OUTPUT:
+- entries, struttura con i duplicati rimossi, Entries.
+
+LAVORO:
+- i, contatore intero per iterare sulla classifica, intero;
+- j, contatore intero per iterare sulla classifica, intero;
+- num_entries, numero di elementi presente nella struttura, intero;
+- current, voce corrente della classifica nell'iterazione, Entry;
+- next, voce succesiva della classifica nell'iterazione, Entry.
+
+ALGORITMO:
+i := 1
+num_entries := get_num_entries(entries)
+MENTRE (i < num_entries - 1)
+  current := get_entry(entries, i)
+  next := get_entry(entries, i + 1)
+
+  SE (str_compare(get_name(current), get_name(next)) = TRUE)
+    ALLORA
+      j := i + 1;
+      MENTRE (j < num_entries - 1)
+        set_entry(entries, get_entry(entries, j + 1), j)
+        j := j + 1
+      FINE
+      num_entries := num_entries - 1
+      i := i - 1
+  FINE
+  i := i + 1
+FINE
+
+FUNZIONE sort_entries()
+=======================
+
+Data una struttura di tipo Entries la ordina secondo i punteggi e se questi sono
+uguali, secondo il nome utente.
+
+INPUT:
+- entries, struttura da riordinare, Entries.
+
+OUTPUT:
+- entries, struttura riordinata, Entries.
+
+LAVORO:
+- i, contatore intero per iterare sulla classifica, intero;
+- j, contatore intero per iterare sulla classifica, intero;
+- entryi, voce i-esima della classifica, Entry;
+- entryj, voce j-esima della classifica, Entry;
+- is_score_greater, determina se un punteggio sia maggiore di un altro, booleano
+  che assume valore VERO se il primo punteggio è maggiore e FALSO altrimenti;
+- is_score_equal, determina se un punteggio è uguale ad un altro, booleano che
+  assume valore VERO se i due punteggi sono uguali e FALSO altrimenti;
+- is_name_prev, determina se un nome viene alfabeticamente prima dell'altro, booleano
+  che assume valore VERO se se il primo nome viene alfabeticamente prima e FALSO
+  altrimenti;
+- should_swap_entries, determina se sia necessario scambiare due voci, booleano
+  che assume valore VERO se il primo punteggio sia maggiore dell'altro oppure
+  se i due punteggi sono uguali e il nome viene alfabeticamente prima e FALSO
+  altrimenti.
+
+ALGORITMO:
+i := 0
+MENTRE (i < get_num_entries(entries))
+  j := 0
+  MENTRE (j < get_num_entries(entries))
+    entryi := get_entry(entries, i)
+    entryj := get_entry(entries, j)
+    is_score_greater := get_final_score(entryj) > get_final_score(entryi)
+    is_score_equal := get_final_score(entryj) = get_final_score(entryi)
+    is_name_prev := str_compare(get_name(entryj), get_name(entryi))
+    should_swap_entries := is_score_greater OR (is_score_equal AND is_name_prev)
+
+    SE (should_swap_entries)
+      ALLORA swap_entries(entryi, entryj)
+    FINE
+    j := j + 1
+  FINE
+  i := i + 1
+FINE
+rm_duplicate_entries(entries)
+
+
+
+
+FUNZIONE write_leaderboard()
+=========================
+Scrive nella posizione corretta in base al punteggio il giocatore in input nella classifica e la salva nel file.
+
+INPUT:
+- e , giocatore da aggiungere alla classifica, Entry
+
+OUTPUT:
+- nullo, non ha output;
+
+LAVORO:
+- leaderboard, classifica gia salvata in memoria,Entries;
+- num_entries, numero di giocatori presenti nella classifica gia salvata, intero>0;
+- write_idx, indice dove scrivere il nuovo giocatore nella classifica, intero>0;
+- count, conteggio dei giocatori nella classifica,intero>0;
+- duplicate_idx, indice del giocatore con lo stesso username del giocatore in input,intero;
+- duplicate, giocatore con lo stesso username del giocatore in input;
+- last, giocatore posizionato ultimo nella classifica,Entry;
+
+
+ALGORITMO:
+
+leaderboard := read_leaderboard()
+num_entries := get_num_entries(leaderboard)
+write_idx := num_entries
+count := num_entries
+SE (num_entries <> NO_ENTRIES) ALLORA
+  write_idx := write_idx-1
+FINE
+
+duplicate_idx := find_duplicate_entry(leaderboard,e)
+SE (duplicate_idx <> INDEX_NOT_FOUND) ALLORA
+  duplicate := get_entry(leaderboard, duplicate_idx)
+  SE (get_final_score(duplicate) > get_final_score(e)) ALLORA
+    Termina
+  FINE
+  write_idx := duplicate_idx
+FINE
+
+SE (num_entries == MAX_ENTRIES) ALLORA
+  last := get_entry(leaderboard,MAX_ENTRIES-1)
+  SE (get_final_score(last) > get_final_score(e)) ALLORA
+    Termina
+  FINE
+ALTRIMENTI
+  count := count +1
+FINE
+
+leaderboard := set_entry(leaderboard,e,write_idx)
+leaderboard := set_num_entries(leaderboard,count)
+leaderboard := sort_entries(leaderboard)
+
+SE (aprire_file(LEADERBOARD_FILE)=NULL) ALLORA
+  throw_err(FILE_NOT_READABLE_ERROR)
+FINE
+ScrivereSuFile(leaderboard)
+
+
+FUNZIONE print_leadearboard()
+============================
+Stampa a video la classifica.
+
+INPUT:
+- es, struttura dati contente tutti giocatori presenti nella classifica, Entries;
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- width, larghezza della stampa del banner classifica
+- height, altezza della stampa del banner classifica
+- padding, distanza dai bordi della stampa del banner della classifica
+- i, contatore usato per iterare i giocatori della classifica,intero>0;
+- rank, posizionamento nella classifica, intero;
+- prev_score, punteggio vecchio del giocatore, intero;
+- e, struttura dati giocatore della classifica usata per iterare, Entry;
+
+ALGORITMO
+
+new_screen()
+SE (get_num_entries(es) = NO_ENTRIES) ALLORA
+  print_err(EMPTY_LEADERBOARD)
+  Termina
+FINE
+
+get_term_size(width,height)
+padding := (width - strlen(LEADERBOARD_BANNER)-1)/2
+stampare_a_video(padding)
+stampare_a_video(LEADERBOARD_BANNER)
+i := 1
+rank := 1
+prev_score := -1
+MENTRE (i <get_num_entries(es))
+  e := get_entry(es, i)
+  SE (get_final_score(e) <> prev_score) ALLORA
+    prev_score := get_final_score(e)
+    rank := i +1
+  FINE
+  stampare_a_video(rank)
+  stampare_a_video(get_name(e))
+  stampare_a_video(get_final_score(e))
+  i := i + 1
+FINE
+
+
+
+FUNZIONE display_leadearboard()
+==============================
+Menu di stampa della classifica.
+
+INPUT:
+- es, struttura dati dei giocatori della classifica da stampare,Entries;
+
+OUTPUT:
+- nullo, non ha output
+
+LAVORO:
+- key, catattere per acquisire la scelta del giocatore, carattere;
+- display, indica se continuare a mostrare o chiedere di uscire inserendo la scelta, booleana che assume valore TRUE o FALSE
+
+ALGORITMO
+
+print_leadearboard(es)
+stampare_a_video("Exit this view by pressing b/ESC/ENTER/SPACEBAR")
+
+display := TRUE
+MENTRE (display = TRUE)
+   key := leggere_carattere()
+   SE (is_back_key(key))
+      ALLORA display := FALSE
+   FINE
+FINE
+
+
+FUNZIONE leadearboard()
+==============================
+Funzione di lettura e stampa della classifica
+
+INPUT:
+- nullo, non ha input
+
+OUTPUT:
+- nullo, non ha output
+
+LAVORO
+- leadearboard, struttura dati contentente i giocatori presenti nella classifica,Entries;
+
+ALGORITMO
+leadearboard := read_leaderboard()
+display_leadearboard(leadearboard)
+

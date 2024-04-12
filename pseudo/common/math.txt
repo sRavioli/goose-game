@@ -1,0 +1,209 @@
+FUNZIONI MATEMATICHE GENERICHE
+==============================
+
+Questo modulo contiene delle generiche funzioni matematiche.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+MIN_DICE_THROW := 1 // Valore minimo di un lancio di dadi
+MAX_DICE_THROW := 6 // Valore massimo di un lancio di dadi
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+FUNZIONE mod()
+==============
+
+Trova il resto della divisione.
+
+INPUT:
+- dividend, dividendo da dividere per il divisore, intero maggiore di zero;
+- divisor, divisore per cui dividere il dividendo, intero maggiore di zero.
+
+OUTPUT:
+- remainder, resto della divisione, intero maggiore o uguale a zero.
+
+ALGORITMO:
+remainder := dividend
+MENTRE (remainder >= divisor)
+  remainder := remainder - divisor;
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE pow()
+==============
+
+Eleva la base all'esponente.
+
+INPUT:
+- base, base della potenza, intero;
+- exponent, esponente della potenza, intero;
+
+OUTPUT:
+- result, risultato della potenza, intero;
+
+ALGORITMO:
+// Check for special cases
+SE (exponent = 0)
+  ALLORA result := 1
+  ALTRIMENTI SE (exponent = 1)
+    ALLORA result := base
+    ALTRIMENTI SE (exponent < 0)
+      ALLORA result := (1 / pow(base, -exponent))
+    FINE
+  FINE
+FINE
+
+// General case: use repeated squaring
+result := 1
+MENTRE (exponent > 0)
+  SE (mod(exponent, 1) = 1)
+    ALLORA result := result * base
+  FINE
+  base := base * base
+  exponent := exponent / 2
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE floor()
+================
+
+Converte un numero decimale in un intero, eliminando la parte decimale.
+
+INPUT:
+- number, numero da convertire in intero, reale maggiore di zero.
+
+OUTPUT:
+- result, numero intero senza la parte decimale, intero maggiore di zero.
+
+ALGORITMO:
+result := 0
+MENTRE (result < number)
+  result := result + 1
+FINE
+result := result - 1
+
+
+------------------------------------------------------------
+
+
+FUNZIONE ceil()
+===============
+
+Converte un numero decimale in un intero, arrotondando verso l'alto.
+
+INPUT:
+- number, numero da convertire in intero, reale maggiore di zero.
+
+OUTPUT:
+- result, numero intero arrotondato verso l'alto, intero maggiore di zero.
+
+ALGORITMO:
+SE (number = floor(num))
+  ALLORA result := floor(number)
+  ALTRIMENTI result := floor(number) + 1
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE round()
+================
+
+Arrotonda un numero all'intero più vicino
+
+INPUT:
+- number, numero da convertire in intero, reale maggiore di zero.
+
+OUTPUT:
+- result, numero intero arrotondato verso l'alto, intero maggiore di zero.
+
+ALGORITMO:
+result := floor(number + 0.5)
+
+
+------------------------------------------------------------
+
+
+FUNZIONE proportion()
+=====================
+
+Calcola la proporzione secondo la seguente formula:
+(numerator * known_value)
+-------------------------
+       denominator
+Il risultato è un intero.
+
+
+INPUT:
+- numerator, valore del numeratore, intero maggiore o uguale a zero;
+- known_value, valore del termine noto, intero maggiore o uguale a zero;
+- denominator, valore del denominatore, intero maggiore di zero;
+
+OUTPUT:
+- result, risultato della proporzione, intero meggiore o uguale a zero;
+
+ALGORITMO:
+result := floor((numerator * known_value) / denominator)
+
+
+FUNZIONE random()
+=================
+
+Genera un numero casuale tra due estremi.
+
+INPUT:
+- bot, estremo inferiore, intero;
+- top, estremo superiore, intero;
+
+OUTPUT:
+- result, risultato dell'operazione di generazione casuale, intero.
+
+
+FUNZIONE roll_dice()
+====================
+
+Tira due dadi.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- roll, risultato del lancio di dadi, intero positivo;
+
+ALGORITMO:
+roll := random(MIN_DICE_THROW, MAX_DICE_THROW) +
+        random(MIN_DICE_THROW, MAX_DICE_THROW)
+
+
+FUNZIONE swap_int()
+===================
+
+Scambia i valori di due variabili intere.
+
+INPUT:
+- n, primo numero, intero;
+- m, secondo numero, intero.
+
+OUTPUT:
+- n, primo numero col valore del secondo, intero;
+- m, secondo numero col valore del primo, intero.
+
+ALGORITMO:
+SE (n <> m)
+  ALLORA
+    n := n + m
+    m := n - m
+    n := n - m
+FINE

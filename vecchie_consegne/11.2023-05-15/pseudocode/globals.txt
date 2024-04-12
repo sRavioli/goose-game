@@ -1,0 +1,11 @@
+LISTA DELLE COSTANTI GLOBALI
+============================
+
+Lista delle costanti globali con loro valore assunto e breve descrizione:
+- LINE_END := "\n", indica di terminare riga e andare a capo;
+- STR_END := '\0', indica il carattere o simbolo che stabilisce la fine di una stringa;
+- STR_EMPTY := "", indica la stringa vuota;
+- SPACE_CHAR := " ", indica il carattere vuoto;
+
+- FALSE := 0, indica il valore intero che viene considerato come "falso" nei controlli;
+- TRUE := NOT(FALSE), indica il valore intero che viene considerato come "vero" nei controlli.

@@ -1,0 +1,547 @@
+FUNZIONI PER LA MANIPOLAZIONE DELLE STRINGHE
+============================================
+
+Questo file contiene implementazioni di diverse funzioni per la manipolazione
+delle stringhe.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+MAX_BUFFER_LEN := 256 // La lunghezza massima consentita per una stringa
+FILLER_CHAR := "?"    // Il carettere da utilizzare come filler se l'username è troppo corto
+LINE_END := "\n"      // Il carattere che definisce la fine di una riga
+STR_END := '\0'       // Il carattere che definisce la fine di una stringa
+STR_EMPTY := ""       // Il carattere vuoto
+SPACE_CHAR := ' '     // Il carattere spazio
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+FUNZIONE str_length()
+=====================
+
+INPUT:
+- string, stringa di cui calcolare la lunghezza, array di caratteri.
+
+OUTPUT:
+- length, lunghezza calcolata della stringa, intero maggiore uguale a zero.
+
+ALGORITMO:
+length := 0
+MENTRE (elemento in posizione length di stringa <> STR_END)
+  length := length + 1
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_concat()
+=====================
+
+Concatena una stringa ad un'altra.
+
+INPUT:
+- buffer, stringa a cui verrà concatenata la stringa source, stringa;
+- source, stringa da concatenare alla stringa buffer, stringa.
+
+OUTPUT:
+- buffer, la stringa modificata dalla concatenazione di source, stringa.
+
+LAVORO:
+- i, contatore per iterare sulla lunghezza di buffer, intero maggiore di zero;
+- j, contatore per iterare sulla lunghezza di source, intero maggiore o uguale
+  a zero.
+
+ALGORITMO:
+i := string_length(buffer)
+j := 1
+MENTRE(elemento j-esimo di source <> STR_END)
+  elemento in posizione i di buffer := elemento in posizione j di source
+  i := i + 1
+  j := j + 1
+FINE
+elemento i-esimo di buffer := STR_END // terminate the string
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_nconcat()
+======================
+
+Concatena una stringa n volte ad un'altra stringa.
+
+INPUT:
+- buffer, stringa a cui concatenare n_times volte la stringa source, stringa;
+- source, stringa da concatenare n_times volte alla stringa buffer, stringa;
+- n_times, quante volte concatenare source a buffer, intero maggiore di zero.
+
+OUTPUT:
+- buffer, stringa modificata dalla concatenazione di source per n_times volte,
+  stringa
+
+LAVORO:
+- i, contatore per iterare n_times volte, intero maggiore o uguale a zero;
+- j, contatore per iterare su buffer, intero maggiore di zero;
+- k, contatore per iterare sugli elementi di source, intero maggiore o uguale a
+  zero.
+
+ALGORITMO:
+i := 1
+MENTRE (i < n_times)
+  j := str_length(buffer) // initialize to length of buffer
+  k := 1
+  MENTRE (elemento in posizione k di source <> STR_END)
+    // concatenate the strings
+    elemento in posizione j di buffer := elemento in posizione k di source
+    j := j + 1
+    k := k + 1
+  FINE
+  i := i + 1
+FINE
+elemento in posizione i di buffer := STR_END // terminate the string
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_compare()
+======================
+
+Compara due stringhe carattere per carattere e verifica se sono uguali.
+
+INPUT:
+- string1, prima stringa da confrontare, stringa;
+- string2, seconda stringa da confrontare, stringa.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se le stringhe
+  sono uguali e FALSE altrimenti.
+
+LAVORO:
+- str1_len, lunghezza calcolata della stringa string1, intero maggiore di zero;
+- str2_len, lunghezza calcolata della stringa string2, intero maggiore di zero;
+- i, contatore per iterare sulla prima stringa, intero maggiore o uguale a zero.
+
+ALGORITMO:
+str1_len := str_length(string1)
+str2_len := str_length(string2)
+SE (str1_len <> str2_len)
+  ALLORA result := FALSE
+FINE
+str1_len := str_length(str1)
+i := 1
+MENTRE (i < str1_len)
+  SE (carattere in posizione i di string1 <> carattere in posizione i di string1)
+    ALLORA result := FALSE
+    ALTRIMENTI result := TRUE
+  FINE
+  i := i + 1
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_copy()
+===================
+
+Copia una stringa in un'altra carattere per carattere.
+
+INPUT:
+- source, stringa di origine da copiare, stringa.
+
+OUTPUT:
+- copied_string, stringa copiata carattere per carattere, stringa.
+
+LAVORO:
+- i, contatore per iterare sulla lunghezza della stringa di origine, intero
+  maggiore o uguale a zero;
+- source_len, lunghezza calcolata della stringa di origine, intero meggiore di
+  zero.
+
+ALGORITMO:
+source_len := str_length(source)
+i := 1
+MENTRE (i < source_len)
+
+  elemento in posizione i di copied_string := elemento in posizione i di source
+  i := i + 1
+FINE
+elemento in posizione i di copied_string := STR_END // terminate the string
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_truncate()
+=======================
+
+INPUT:
+- source, stringa da troncare al carattere specificato, stringa;
+- idx, indice che rappresenta il carattere a cui troncare, intero maggiore di
+  zero;
+
+OUTPUT:
+- buffer, stringa troncata alla lunghezza desiderata, stringa;
+
+ALGORITMO:
+SE (idx < str_length(source))
+  ALLORA buffer := source
+FINE
+
+i := 1
+MENTRE (i < idx)
+  carattere in posizione i di source := carattere in posizione i di buffer
+  i := i + 1
+FINE
+carattere in posizione i di buffer := STR_END
+
+
+------------------------------------------------------------
+
+
+FUNZIONE rm_first_char()
+========================
+
+INPUT:
+- source, stringa cui rimuovere il primo carattere, stringa;
+
+OUTPUT:
+- destination, stringa con il primo carattere rimosso, stringa;
+
+ALGORITMO:
+source_len := str_length(source)
+i := 1
+MENTRE (i < source_len)
+  elemento in posizione i di destination := elemento in posizione i di source
+  i := i + 1
+FINE
+elemento in posizione i di destination := STR_END
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_justify()
+======================
+
+Applica la giustificazione desiderata in base alla larghezza specificata.
+
+INPUT:
+- source, stringa che deve essere giustificata, stringa.
+- width, larghezza su cui applicare la giustificazione, intero maggiore di zero.
+- justification, che tipo di giustificazione effettuare, stringa che può assumere
+  tre valori: "left", "center", "right".
+
+OUTPUT:
+- justified_str, stringa giustificata secondo il parametro justification, stringa.
+
+ALGORITMO:
+SE (str_compare(justification, "left") = TRUE)
+  ALLORA
+    justified_str := str_justify_left(source)
+  ALTRIMENTI SE (str_compare(justification, "center") = TRUE)
+    ALLORA
+      justified_str := str_justify_center(source, width)
+    ALTRIMENTI SE (str_compare(justification, "right") = TRUE)
+      ALLORA
+        justified_str := str_justify_right(source, width)
+      ALTRIMENTI
+        justified_str := source
+    FINE
+  FINE
+FINE
+
+
+FUNZIONE str_justify_left()
+---------------------------
+
+INPUT:
+- source, la stringa che dev'essere giustificata, stringa;
+
+OUTPUT:
+- buffer, la stringa che è stata giustificata, stringa
+
+LAVORO:
+- i, contatore per iterare sulla stringa source, intero maggiore o uguale a zero;
+- j, contatore per iterare sulla stringa buffer, intero maggiore o uguale a zero;
+
+ALGORITMO:
+i := 1
+MENTRE (elemento i-esimo di source = SPACE_CHAR)
+  // skip any spaces present at the start of the string
+  i := i + 1
+FINE
+
+j := 1
+MENTRE (elemento i-esimo di source <> STR_END)
+  // copy strings
+  elemento in posizione j di buffer := elemento in posizione i di source
+  i := i + 1
+  j := j + 1
+FINE
+elemento in posizione j di buffer := STR_END // terminate the string
+
+
+FUNZIONE str_justify_right()
+----------------------------
+
+INPUT:
+- source, la stringa che dev'essere giustificata, stringa;
+- width, larghezza totale della stringa buffer, intero maggiore di zero.
+
+OUTPUT:
+- buffer, la stringa che è stata giustificata, stringa
+
+LAVORO:
+- left_padding, numero di spazi da aggiungere prima della stringa, intero
+  maggiore di zero.
+
+ALGORITMO:
+left_padding := width - str_length(source)
+str_nconcat(buffer, SPACE_CHAR, left_padding) // add left padding
+str_concat(buffer, source)                    // concatenate the strings
+
+
+FUNZIONE str_justify_center()
+-----------------------------
+
+INPUT:
+- source, la stringa che dev'essere giustificata, stringa;
+- width, larghezza totale della stringa buffer, intero maggiore di zero.
+
+OUTPUT:
+- buffer, la stringa che è stata giustificata, stringa
+
+LAVORO:
+- left_padding, numero di spazi da aggiungere prima della stringa, intero
+  maggiore di zero.
+
+ALGORITMO:
+left_padding := (width - str_length(source)) / 2
+str_nconcat(buffer, SPACE_CHAR, left_padding) // add left padding
+str_concat(buffer, source)                    // add the source string
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_split()
+====================
+
+INPUT:
+- string, stringa da dividere in più stringhe, stringa;
+- char, carattere secondo il quale dividere la stringa, carattere.
+
+OUTPUT:
+- strings, lista di stringhe divise al carattere char, array di stringhe.
+
+LAVORO:
+- copy, copia della stringa iniziale, stringa;
+- i, contatore per iterare sulla lunghezza della stringa, intero meggiore o
+  uguale a zero;
+- length, lunghezza della stringa, intero maggiore di zero;
+- current_line, rappresenta la riga corrente nell'iterazione, stringa;
+- current_char, il carattere corrente della stringa, carattere;
+
+ALGORITMO:
+copy := str_copy(string)
+i := 1
+length := str_length(copy)
+MENTRE (i < length)
+  current_char := carattere in i-esimo di copy
+  SE (current_char <> char)
+    ALLORA
+      elemento i-esimo di current_line := current_char
+    ALTRIMENTI
+      elemento i-esimo di strings := current_line
+      current_line := STR_EMPTY
+  FINE
+  i := i + 1
+FINE
+SE (current_line <> STR_EMPTY)
+  ALLORA
+    elemento i-esimo di strings := current_line
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_to_int()
+=====================
+
+INPUT:
+- str, la stringa contenente il numero da convertire, stringa.
+
+OUTPUT:
+- int, il numero convertito in forma di intero, intero.
+
+LAVORO:
+- sign, il segno del numero, intero;
+- i, contatore per iterare sui caratteri della stringa, intero.
+
+ALGORITMO:
+SE ((primo carattere di str = '-') OR (primo carattere di str = '+'))
+  ALLORA
+    SE (primo carattere di str = '-')
+      ALLORA sign := -1
+      ALTRIMENTI sign := 1
+    FINE
+    str := rm_first_char(str)
+  ALTRIMENTI sign := 1
+FINE
+
+i := 1
+MENTRE (i < str_length(str))
+  digit := elemento in posizione i di str - '0'
+  int := int * 10 + digit
+  i := i + 1
+FINE
+int := int * sign // Applica il segno al numero convertito
+
+
+------------------------------------------------------------
+
+
+FUNZIONE int_to_str()
+=====================
+
+Converte un numero intero in una stringa.
+
+INPUT:
+- int, numero intero da convertire, intero.
+
+OUTPUT:
+- str, stringa convertita da intero, stringa.
+
+LAVORO:
+- c, cifra del numero intero convertita in carattere, carattere.
+
+
+ALGORITMO:
+str_num := STR_EMPTY  // Inizializza la stringa vuota
+SE (num < 0)
+  ALLORA
+    str_concat(str, '-')
+    num := -num
+FINE
+
+MENTRE (num > 0)
+  num := num / 10
+  c := mod(num, 10) + '0'
+  str_concat(str, c)
+FINE
+
+
+FUNZIONE is_alphanumeric()
+==========================
+
+Dato un carattere, verifica se esso sia alfanumerico o meno.
+
+INPUT:
+- c, carattere di cui verificare se sia alfanumerico, carattere.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se vero, FALSE
+  altrimenti.
+
+ALGORITMO:
+SE ((c >= 'A' AND c <= 'Z') OR
+    (c >= 'a' AND c <= 'z') OR
+    (c >= '0' AND c <= '9'))
+  ALLORA result := TRUE
+  ALTRIMENTI result := FALSE
+FINE
+
+
+FUNZIONE is_punctuation()
+=========================
+
+Dato un carattere, verifica se esso sia un simbolo di punteggiatura o meno.
+
+INPUT:
+- c, carattere di cui verificare se sia simbolo di punteggiatura, carattere.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se vero, FALSE
+  altrimenti.
+
+ALGORITMO:
+SE ((c >= '!' AND c <= '/') OR (c >= ':' AND c <= '@') OR
+    (c >= '[' AND c <= '`') OR (c >= '{' AND c <= '~'))
+  ALLORA result := TRUE
+  ALTRIMENTI result := FALSE
+FINE
+
+
+FUNZIONE is_digit()
+===================
+
+Dato un carattere, verifica se esso sia una cifra o meno.
+
+INPUT:
+- c, carattere di cui verificare se sia un numero, carattere.
+
+OUTPUT:
+- result, esito del confronto, booleano che assume valore TRUE se vero e FALSE
+  altrimenti.
+
+ALGORITMO:
+SE ((c >= '0') AND (c <= '9'))
+  ALLORA result := TRUE
+  ALTRIMENTI result := FALSE
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE to_uppercase()
+=======================
+
+Dato un carattere, lo converte in maiuscolo.
+
+INPUT:
+- c, carattere da convertire in maiuscolo, carattere.
+
+OUTPUT:
+- result, carattere convertito in maiuscolo, carattere.
+
+ALGORITMO:
+SE ((c >= 'a') AND (c <= 'z'))
+  ALLORA result := c - 'a' + 'A'
+  ALTRIMENTI result := c
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE str_to_uppercase()
+===========================
+
+Data una stringa, converte ogni suo singolo carattere in maiuscolo.
+
+INPUT:
+- source, stringa da convertire in maiuscolo, stringa.
+
+OUTPUT:
+- source, stringa convertita in maiuscolo, stringa.
+
+LAVORO:
+- source_len, lunghezza della stringa, intero maggiore di zero.
+
+
+ALGORITMO:
+source_len := str_length(source)
+i := 0
+MENTRE (i < source_len)
+  to_uppercase(carattere in posizione i di source)
+  i := i + 1
+FINE

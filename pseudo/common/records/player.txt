@@ -1,0 +1,208 @@
+TIPO DI DATO PLAYER
+===================
+
+Il tipo di dato Player rappresenta un giocatore nel gioco ed è definito come un
+record contenente:
+- una stringa che rappresenti il nome utente del giocatore;
+- un intero che rappresenti l'identificatore univoco del giocatore;
+- un intero che indica la posizione attuale del giocatore sul tabellone;
+- un intero che rappresenti il punteggio attuale del giocatore;
+- un intero che indica il numero di turni in cui il giocatore è bloccato.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI RELATIVE AL TIPO DI DATO PLAYER
+----------------------------------------
+
+INITIAL_POSITION := 0    // La posizione iniziale di un giocatore.
+INITIAL_SCORE := 0       // Il punteggio iniziale di un giocatore.
+NO_TURNS_BLOCKED := 0    // Valore che rappresenta che un giocatore può muoversi liberamente
+
+INN_BLOCK := 3           // Il numero di turni in cui un giocatore viene
+                         // bloccato se si ferma sulla casella dell'osteria.
+INDEF_BLOCK := 999999    // Valore che rappresenta un blocco indefinito.
+
+ESCAPE_ROLL1 := 5        // Il valore del lancio dei dadi necessario per un
+                         // giocatore per uscire da un pozzo o una prigione.
+ESCAPE_ROLL2 := 7        // Il valore alternativo del lancio dei dadi necessario
+                         // per un giocatore per uscire da un pozzo o prigione.
+
+MAX_USERNAME_LENGTH := 3 // La lunghezza massima del nome utente di un giocatore.
+ID_OFFSET := 100         // L'offset utilizzato per generare gli ID univoci.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD Player:
+- username, il nome utente del giocatore, stringa;
+- id, l'identificatore univoco del giocatore, intero positivo;
+- position, la posizione attuale del giocatore sul tabellone, intero positivo;
+- score, punteggio attuale del giocatore, intero positivo;
+- turns_blocked, numero di turni in cui il giocatore è bloccato, intero positivo.
+
+FUNZIONI DI ACCESSO
+===================
+
+Le seguenti funzioni permettono l'accesso alle informazioni del tipo di dato
+Player:
+
+FUNZIONE get_username()
+=======================
+
+Restituisce il valore del campo username del record Player.
+
+INPUT:
+- player, giocatore di cui leggere nome utente, Player.
+
+OUTPUT:
+- username, valore del nome utente del giocatore, stringa.
+
+ALGORITMO:
+username := valore del campo username di player
+
+FUNZIONE set_username()
+=======================
+
+Aggiorna il valore del campo username del record Player con quello ricevuto.
+
+INPUT:
+- player, giocatore di cui aggiornare nome utente, Player;
+- username, valore del nome utente da impostare, stringa.
+
+OUTPUT:
+- player, giocatore col valore aggiornato di nome utente, Player;
+
+ALGORITMO:
+valore del campo username di player := username
+
+
+FUNZIONE get_id()
+=================
+
+Restituisce il valore del campo id del record Player.
+
+INPUT:
+- player, giocatore di cui leggere l'identificatore univoco, Player.
+
+OUTPUT:
+- id, valore del l'identificatore univoco del giocatore, intero positivo.
+
+ALGORITMO:
+id := valore del campo id di player
+
+FUNZIONE set_id()
+=================
+
+Aggiorna il valore del campo id del record Player calcolandolo attraverso il
+nome utente.
+
+INPUT:
+- player, giocatore di cui aggiornare l'identificatore univoco, Player.
+
+OUTPUT:
+- player, giocatore col valore aggiornato di l'identificatore univoco, Player.
+
+LAVORO:
+- i, contatore per iterare sul nome utente, intero maggiore o uguale a zero.
+
+ALGORITMO:
+username := get_username(player)
+i := 0
+id := 0
+MENTRE (i < MAX_USERNAME_LENGTH)
+  id := id * ID_OFFSET + carattere in posizione i di username
+  i := i + 1
+FINE MENTRE
+valore del campo id di player := id
+
+
+FUNZIONE get_position()
+=======================
+
+Restituisce il valore del campo position del record Player.
+
+INPUT:
+- player, giocatore di cui leggere la posizione, Player.
+
+OUTPUT:
+- position, valore del la posizione del giocatore, intero positivo.
+
+ALGORITMO:
+position := valore del campo position di player
+
+FUNZIONE set_position()
+=======================
+
+Aggiorna il valore del campo position del record Player con quello ricevuto.
+
+INPUT:
+- player, giocatore di cui aggiornare la posizione, Player;
+- position, valore del la posizione da impostare, intero positivo.
+
+OUTPUT:
+- player, giocatore col valore aggiornato di la posizione, Player.
+
+ALGORITMO:
+valore del campo position di player := position
+
+
+FUNZIONE get_score()
+====================
+
+Restituisce il valore del campo score del record Player.
+
+INPUT:
+- player, giocatore di cui leggere il punteggio, Player.
+
+OUTPUT:
+- score, valore del il punteggio del giocatore, intero positivo.
+
+ALGORITMO:
+score := valore del campo score di player
+
+FUNZIONE set_score()
+====================
+
+Aggiorna il valore del campo score del record Player con quello ricevuto.
+
+INPUT:
+- player, giocatore di cui aggiornare il punteggio, Player;
+- score, valore del il punteggio da impostare, intero positivo.
+
+OUTPUT:
+- player, giocatore col valore aggiornato di il punteggio, Player.
+
+ALGORITMO:
+valore del campo score di player := score
+
+
+FUNZIONE get_turns_blocked()
+============================
+
+Restituisce il valore del campo turns_blocked del record Player.
+
+INPUT:
+- player, giocatore di cui leggere il numero di turni per cui è bloccato, Player.
+
+OUTPUT:
+- turns_blocked, valore del il numero di turni per cui è bloccato il giocatore, intero positivo.
+
+ALGORITMO:
+turns_blocked := valore del campo turns_blocked di player
+
+FUNZIONE set_turns_blocked()
+============================
+
+Aggiorna il valore del campo turns_blocked del record Player con quello ricevuto.
+
+INPUT:
+- player, giocatore di cui aggiornare il numero di turni per cui è bloccato, Player;
+- turns_blocked, valore del il numero di turni per cui è bloccato da impostare, intero positivo.
+
+OUTPUT:
+- player, giocatore col valore aggiornato del numero di turni per cui è bloccato, Player.
+
+ALGORITMO:
+valore del campo turns_blocked di player := turns_blocked
+

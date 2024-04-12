@@ -1,0 +1,46 @@
+LISTA DELLE COSTANTI GLOBALI
+============================
+
+Lista delle costanti globali con loro valore assunto e breve descrizione:
+- MIN_NUM_SQUARES := 50, numero minimo consentito di caselle;
+- MAX_NUM_SQUARES := 90, numero massimo consentito di caselle;
+- MIN_NUM_PLAYERS := 2, numero minimo consentito di giocatori;
+- MAX_NUM_PLAYERS := 4, numero massimo consentito di giocatori;
+
+- GOOSE_SPACING := 9, distanza prefissata tra una casella oca e un'altra;
+- GOOSE_VALUE := 0, valore che la casella assume quando essa è una casella "oca";
+
+- BRIDGE_SQUARE := 6, posizione base all'interno del tabellone della casella "ponte";
+- INN_SQUARE := 19, posizione base all'interno del tabellone della casella "locanda";
+- WELL_SQUARE := 31, posizione base all'interno del tabellone della casella "pozzo";
+- LABYRINTH_SQUARE := 42, posizione base all'interno del tabellone della casella "labirinto";
+- PRISON_SQUARE := 52, posizione base all'interno del tabellone della casella "prigione";
+- SKELETON_SQUARE := 58, posizione base all'interno del tabellone della casella "scheletro";
+
+- BRIDGE_VALUE := -1, valore assunto dalla casella "ponte";
+- INN_VALUE := -2, valore assunto dalla casella "locanda";
+- WELL_VALUE := -3, valore assunto dalla casella "pozzo";
+- LABYRINTH_VALUE := -4, valore assunto dalla casella "labirinto";
+- PRISON_VALUE := -5, valore assunto dalla casella "prigione";
+- SKELETON_VALUE := -6, valore assunto dalla casella "scheletro";
+
+- DEFAULT_COLS := 15, numero di colonne di default;
+- DEFAULT_SQUARE_LEN := 7, lunghezza di default della singola casella;
+- DEFAULT_BORDERS := {"╭", "╮", "╰", "╯", "┬", "┴", "─", "│"}, array di caratteri che compongono il bordo del tabellone.
+
+- INITIAL_POSITION := 0, posizione iniziale di qualsiasi giocatore sul tabellone;
+- INITIAL_SCORE := 0, punteggio iniziale di qualsiasi giocatore in gioco;
+- MAX_USERNAME_LENGTH := 3, lunghezza massima dell'username di un utente;
+
+- MIN_DICE_THROW := 2, numero più basso di un lancio doppio di dadi;
+- MAX_DICE_THROW := 12, numero più alto di un lancio doppio di dadi;
+
+------------------
+
+- LINE_END := "\n", indica di terminare riga e andare a capo;
+- STR_END := '\0', indica il carattere o simbolo che stabilisce la fine di una stringa;
+- STR_EMPTY := "", indica la stringa vuota;
+- SPACE_CHAR := " ", indica il carattere vuoto;
+
+- FALSE := 0, indica il valore falso;
+- TRUE := NOT(FALSE), indica il valore vero.

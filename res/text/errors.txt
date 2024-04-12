@@ -1,0 +1,16 @@
+this key does nothing.
+value is out of bounds, please retry.
+invalid input, please enter a valid input.
+this username is invalid, please retry.
+this username is already in use, please change yours.
+failed to allocate memory for pointer.
+failed to allocate memory for string.
+given file name is invalid.
+failed to write to file.
+failed to read from file.
+call stack overflow!
+call stack underflow! trying to pop call but the call stack is empty.
+that is not a valid game, retry.
+max number of saves reached, you need to choose a game to delete
+no saved games found!
+The leaderboard is empty! Play some games to fill it.

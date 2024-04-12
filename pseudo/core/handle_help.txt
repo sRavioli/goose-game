@@ -1,0 +1,48 @@
+MODULO PER LA GESTIONE DELL'AIUTO
+=================================
+
+Questo modulo contiene le funzioni per la gestione dell'aiuto.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+HELP_MENU_FILE := "./res/text/menus/help.txt" // Il percorso per il menù di aiuto
+RULES_FILE     := "./res/text/rules.txt"      // Il percorso per le regole
+MANUAL_FILE    := "./res/text/manual.txt"     // Il percorso per il menuale
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+FUNZIONE help_menu()
+====================
+
+Mostra il menù di aiuto, richiede input all'utente.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+ALGORITMO:
+print_menu(HELP_MENU_FILE)
+
+menu_loop := TRUE
+MENTRE (menu_loop = TRUE)
+  key := leggere_da_tastiera()
+
+  SE (key = 'r')
+    ALLORA
+      display_file(RULES_FILE)
+      print_menu(HELP_MENU_FILE)
+  ALTRIMENTI SE (key = 'm')
+    ALLORA
+      display_file(MANUAL_FILE)
+      print_menu(HELP_MENU_FILE)
+  ALTRIMENTI SE (key = 'b')
+    ALLORA menu_loop := FALSE
+  FINE
+FINE

@@ -1,0 +1,30 @@
+LISTA DELLE COSTANTI GLOBALI
+============================
+
+Lista delle costanti globali con loro valore assunto e breve descrizione:
+- MIN_NUM_SQUARES := 50, il numero minimo consentito di caselle;
+- MAX_NUM_SQUARES := 90, il numero massimo consentito di caselle;
+- MIN_NUM_PLAYERS := 2, il numero minimo consentito di giocatori;
+- MAX_NUM_PLAYERS := 4, il numero massimo consentito di giocatori;
+
+- GOOSE_VALUE := 0, il valore che la casella assume quando essa è una casella "oca";
+- GOOSE_SPACING := 9, la distanza prefissata tra una casella oca e un'altra;
+
+- BRIDGE_SQUARE := 6, la posizione base all'interno del tabellone della casella "ponte";
+- INN_SQUARE := 19, la posizione base all'interno del tabellone della casella "locanda";
+- WELL_SQUARE := 31, la posizione base all'interno del tabellone della casella "pozzo";
+- LABYRINTH_SQUARE := 42, la posizione base all'interno del tabellone della casella "labirinto";
+- PRISON_SQUARE := 52, la posizione base all'interno del tabellone della casella "prigione";
+- SKELETON_SQUARE := 58, la posizione base all'interno del tabellone della casella "scheletro";
+
+- BRIDGE_VALUE := -1, il valore assunto dalla casella "ponte";
+- INN_VALUE := -2, il valore assunto dalla casella "locanda";
+- WELL_VALUE := -3, il valore assunto dalla casella "pozzo";
+- LABYRINTH_VALUE := -4, il valore assunto dalla casella "labirinto";
+- PRISON_VALUE := -5, il valore assunto dalla casella "prigione";
+- SKELETON_VALUE := -6, il valore assunto dalla casella "scheletro".
+
+------------------
+
+- FINE_RIGA, indica di terminare la riga e andare a capo.
+

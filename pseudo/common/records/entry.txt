@@ -1,0 +1,78 @@
+TIPO DI DATO ENTRY
+==================
+
+Il tipo di dato Entry deve essere rappresentato come un record composto da:
+- una stringa che rappresenti il nome utente di un giocatore;
+- un intero che rappresenti il punteggio del giocatore.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD Entry:
+- name, il nome utente del giocatore, stringa;
+- final_score, punteggio finale del giocatore, intero positivo.
+
+FUNZIONI DI ACCESSO
+===================
+
+Le seguenti funzioni permettono l'accesso alle informazioni del tipo di dato
+Entry:
+
+FUNZIONE get_name()
+===================
+
+Restituisce il valore del campo name del record Entry.
+
+INPUT:
+- entry, voce di classifica di cui leggere il nome utente, Entry.
+
+OUTPUT:
+- name, valore del nome utente della voce di classifica, stringa.
+
+ALGORITMO:
+name := valore del campo name di entry
+
+FUNZIONE set_name()
+===================
+
+Aggiorna il valore del campo name del record Entry con quello ricevuto.
+
+INPUT:
+- entry, voce di classifica di cui aggiornare il nome utente, Entry;
+- name, valore del nome utente da impostare, stringa.
+
+OUTPUT:
+- entry, voce di classifica col valore aggiornato di il nome utente, Entry.
+
+ALGORITMO:
+valore del campo name di entry := name
+
+FUNZIONE get_final_score()
+==========================
+
+Restituisce il valore del campo final_score del record Entry.
+
+INPUT:
+- entry, voce di classifica di cui leggere il punteggio finale, Entry.
+
+OUTPUT:
+- final_score, valore del punteggio finale della voce di classifica, intero positivo.
+
+ALGORITMO:
+final_score := valore del campo final_score di entry
+
+FUNZIONE set_final_score()
+==========================
+
+Aggiorna il valore del campo final_score del record Entry con quello ricevuto.
+
+INPUT:
+- entry, voce di classifica di cui aggiornare il punteggio finale, Entry;
+- final_score, valore del punteggio finale da impostare, intero positivo.
+
+OUTPUT:
+- entry, voce di classifica col valore aggiornato di il punteggio finale, Entry.
+
+ALGORITMO:
+valore del campo final_score di entry := final_score
+

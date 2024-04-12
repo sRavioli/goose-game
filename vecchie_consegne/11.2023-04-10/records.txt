@@ -1,0 +1,95 @@
+STRUTTURE DATI E RELATIVE FUNZIONI DI ACCCESSO
+==============================================
+
+"globals.txt"
+
+
+BOARD
+=====
+
+Il tipo di dato Board deve essere rappresentato come un record composto da:
+- un vettore di interi a una dimensione che contenga i valori delle caselle del 
+  tabellone di gioco;
+- un numero intero che rappresenti il numero di caselle possedute dal tabellone.
+
+
+RECORD Board:
+- squares, lista di caselle del tabellone di gioco. Array a una dimensione con 
+  lunghezza minima e massima rispettivamente di MIN_NUM_SQUARES e MAX_NUM_SQUARES;
+- dim, il numero di caselle che il tabellone di gioco possiede. Intero che è 
+  compreso tra MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+
+funzioni di accesso
+===================
+
+Le funzioni di accesso al tipo di dato Board sono le seguenti:
+- get_square()
+- set_square()
+- get_dim()
+- set_dim()
+
+funzione get_square()
+---------------------
+
+Estrae il valore della casella in una determinata posizione del tabellone di 
+gioco.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+- position, posizione da cui estrarre il valore di squares, intero maggiore di 
+  zero.
+
+OUTPUT:
+- square, valore della casella nella posizione position, intero.
+
+ALGORITMO:
+square := valore della casella in posizione position del campo squares di board
+
+funzione set_square()
+---------------------
+
+Modifica il valore di una casella del tabellone di gioco.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+- position, posizione della casella del tabellone che dev'essere modificata, intero;
+- value, valore che la casella del tabellone da modificare deve assumere, intero.
+
+OUTPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+
+ALGORITMO:
+casella del campo squares di board in posizione position := value
+
+funzione get_dim()
+------------------
+
+Restituisce il numero di caselle che il tabellone di gioco possiede.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+
+OUTPUT:
+- dim, il numero di caselle che il tabellone di gioco possiede. Intero che 
+  è compreso tra MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+ALGORITMO:
+dim := valore del campo dim di board
+
+
+funzione set_dim()
+------------------
+
+Imposta il numero di caselle che il tabellone di gioco deve avere.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+- dimension, valore che la dimensione del tabellone deve assumere, intero.
+
+OUTPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board;
+
+ALGORITMO:
+valore del campo dim di board := dimension
+

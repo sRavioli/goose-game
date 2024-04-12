@@ -1,0 +1,65 @@
+MODULI DA UTILIZZARE PER IL GIOCO DELL'OCA
+==========================================
+
+Breve descrizione dei moduli contenuti all'interno della cartella "./core/".
+
+HANDLE GAME
+===========
+
+Il file "./core/handle_game.txt" è un modulo di gestione della partita del gioco
+dell'oca. Il modulo contiene una serie di funzioni per richiedere e inizializzare
+la partita, inserire caselle speciali e oca nel tabellone di gioco e stampare il
+tabellone.
+
+Successivamente, sono definite alcune costanti globali utilizzate
+nel modulo, come il numero minimo e massimo di caselle, il numero minimo e
+massimo di giocatori e i valori e le posizioni delle caselle speciali.
+
+Contiene tutte le funzioni che gestiscono il funzionamento della singola partita,
+come ad esempio la stampa del tabellone, lo spostamento dei giocatori, etc.
+
+Il modulo fa riferimento ad altri file di libreria come "math.txt", "string.txt",
+"globals.txt" e "records.txt" per importare le funzioni necessarie.
+
+
+HANDLE LEADERBOARD
+==================
+
+Il file "handle_leaderboard.txt" contiene un modulo per la gestione della
+classifica di gioco. Il modulo include diverse funzioni per lavorare con la
+classifica, come la visualizzazione della classifica, la lettura e scrittura dei
+dati della classifica su file, la rimozione dei duplicati e l'ordinamento delle
+voci.
+
+Il modulo fa riferimento ad altri file di libreria come "math.txt", "string.txt",
+"globals.txt" e "records.txt" per importare le funzioni necessarie.
+
+
+HANDLE HELP
+===========
+
+Il file "handle_help.txt" contiene lo pseudocodice per la gestione dell'aiuto.
+
+Il modulo fa riferimento ad altri file di libreria come "math.txt", "string.txt",
+"globals.txt" e "records.txt" per importare le funzioni necessarie.
+
+Il modulo per la gestione dell'aiuto viene utilizzato per visualizzare un menu
+di aiuto, stampare le regole e il manuale del gioco, consentendo all'utente di
+navigare tra le diverse opzioni.
+
+
+Contiene tutte le funzioni relative alla lettura e stampa del file di aiuto.
+
+HANDLE SAVING
+=============
+
+Il file "handle_saving.txt" contiene un modulo per la gestione dei salvataggi
+di partite di gioco.
+
+Il modulo offre le funzionalità per salvare, eliminare e avviare partite salvate,
+consentendo agli utenti di gestire le proprie partite di gioco.
+
+Contiene tutte le funzioni relative alla lettura e scrittura da/su file.
+
+Il modulo fa riferimento ad altri file di libreria come "math.txt", "string.txt",
+"globals.txt" e "records.txt" per importare le funzioni necessarie.

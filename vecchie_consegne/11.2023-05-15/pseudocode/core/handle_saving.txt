@@ -1,0 +1,174 @@
+MODULO PER LA GESTIONE DEI SALVATAGGI
+=====================================
+
+vedere "../library/math.txt"
+vedere "../library/string.txt"
+vedere "../library/globals.txt"
+vedere "../library/records.txt"
+
+-------------------------------------------------------------------------------
+
+Costanti definite in questo modulo:
+- SAVE_FILE := "../data/saved_games.bin", file su cui salvare le partite;
+- MAX_GAMES := 5, numero massimo di partite salvate;
+- SAVE_MENU_FILE := "../menus/saved.txt", menù delle partite salvate.
+
+-------------------------------------------------------------------------------
+
+
+FUNZIONE menu_saved_games()
+===========================
+
+Stampa il menu della partite salvate e esegue le azioni scelte dall'utente.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- menu_loop, indica se continuare a richiedere l'input utente, booleana che assume
+  valore TRUE se continuare a chiedere e FALSE altrimenti;
+
+ALGORITMO:
+clear_screen()
+print_from_file(SAVE_MENU_FILE)
+
+menu_loop := TRUE
+MENTRE (menu_loop)
+  key := LeggereDaTastiera()
+
+  SE (key = 'l')
+    ALLORA launch_saved_game(SAVE_FILE)
+    ALTRIMENTI SE (key = 'q')
+      ALLORA main_menu_loop := FALSE
+    FINE
+  FINE
+FINE
+
+
+FUNZIONE choose_saved_game()
+============================
+
+Chiede all'utente che partita salvata vuole e ritorna l'indice della partita
+scelta.
+
+INPUT:
+- file, file che contiene le partite salvate, file.
+
+OUTPUT:
+- index, indice della partita scelta dall'utente, intero.
+
+LAVORO:
+- saved_games, struttura contenente le partite salvate dall'utente, Games; //
+- saved_game, struttura contenente la partita salvata all'indice i, Games; //
+- i, contatore intero per iterare sul numero di partite salvate, intero.
+
+
+ALGORITMO:
+num_saved_games := LeggereDaFile(file)
+StampareAVideo("Scegliere una delle seguenti partite salvate: ")
+
+i := 0
+MENTRE (i < num_saved_games)
+  saved_game := LeggereDaFile(file)
+  StampareAVideo(i)
+  StampareAVideo(" - ")
+  StampareAVideo(get_game_name(saved_game))
+  // set_game(saved_games, saved_game, i)
+  i := i + 1
+FINE
+ESEGUI
+  index := LeggereDaTastiera()
+FINCHÉ (index < 0 OR index > num_saved_games)
+FINE
+
+
+FUNZIONE save_game()
+====================
+
+Questa funzione scrive su file binario una partita in corso.
+
+INPUT:
+- players, struttura con i giocatori del gioco, Players;
+- board, tabellone di gioco, Board;
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- current_game, struttura di salvataggio del gioco, Game;
+- games, partite salvate, Games;
+
+
+ALGORITMO:
+games := LeggereDaFile(SAVE_FILE)
+index := get_num_games(games) + 1
+
+SE (get_num_games(games) < MAX_GAMES) // 5
+  ALLORA
+    index := choose_saved_game(SAVE_FILE)
+    games := delete_game(games, index)
+FINE
+
+current_game := set_num_games(current_game, get_num_games(current_game) + 1)
+current_game := set_game_players(current_game, players)
+current_game := set_game_board(current_game, board)
+
+game_name := LeggereDaTastiera()
+current_game := set_game_name(current_game, game_name)
+
+set_game(games, current_game, index)
+ScrivereSuFile(games)
+
+
+FUNZIONE delete_game()
+======================
+
+Data una struttura Games, elimina l'elemento della lista di partite all'indice
+dato.
+
+INPUT:
+- games, partite salvate, Games;
+- index, indice della partita da eliminare, intero.
+
+OUTPUT:
+- new_games, partite salvate senza la partita all'indice index, Games.
+
+ALGORITMO:
+num_games := get_num_games(games)
+set_num_games(new_games, num_games)
+
+i := 0
+MENTRE (i < num_games)
+  SE (i != index)
+    ALLORA set_game(new_games, get_game(games, i), i)
+  FINE
+  i := i + 1
+FINE
+
+
+FUNZIONE launch_saved_game()
+============================
+
+INPUT:
+- file, file da cui lanciare la partita, file.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- index, quale partita salvata avviare, intero;
+- games, le partite salvate in precedenza, Games;
+- players, quanti e quali giocatori partecipano alla partita, Players;
+- board, tabellone di gioco su cui si svolge la partita, Board.
+
+ALGORITMO:
+index := choose_saved_game(file)
+
+games := LeggereDaFile(file)
+players := get_players(get_game(games, index))
+board := get_board(get_game(games, index))
+
+game_loop(players, board)

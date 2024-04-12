@@ -1,0 +1,95 @@
+TIPO DI DATO PLAYERS
+====================
+
+Il tipo di dato Players rappresenta una lista di giocatori ed è definito come un
+record contenente:
+- un vettore che contiene tutti i giocatori presenti nella partita;
+- un intero che rappresenti il numero corrente di giocatori nella partita.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI RELATIVE AL TIPO DI DATO PLAYERS
+-----------------------------------------
+
+MIN_NUM_PLAYERS := 2 // Il numero minimo consentito di giocatori
+MAX_NUM_PLAYERS := 4 // Il numero massimo consentito di giocatori
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD Players:
+- players, lista di giocatori del gioco, array unidimensionale di Player;
+- num_players, numero corrente di giocatori del gioco dell'oca, intero che deve
+  essere nell'intervallo [MIN_NUM_PLAYERS, MAX_NUM_PLAYERS].
+
+FUNZIONI DI ACCESSO
+===================
+
+Le seguenti funzioni permettono l'accesso alle informazioni del tipo di dato
+Players:
+
+FUNZIONE get_player()
+=====================
+
+Restituisce il valore del campo player del record Players all'indice dato.
+
+INPUT:
+- players, lista di giocatori di cui leggere il singolo giocatore, Players;
+- index, indice al quale leggere il singolo giocatore, intero.
+
+OUTPUT:
+- player, valore del singolo giocatore della lista di giocatori all'indice dato, Player.
+
+ALGORITMO:
+player := valore del campo player alla posizione index di players
+
+FUNZIONE set_player()
+=====================
+
+Aggiorna il valore del campo player del record Players all'indice dato, con
+quello ricevuto.
+
+INPUT:
+- players, lista di giocatori di cui aggiornare il singolo giocatore, Players;
+- index, indice al quale aggiornare il valore del campo player, intero;
+- player, valore del singolo giocatore da impostare all'indice dato, Player.
+
+OUTPUT:
+- players, lista di giocatori col valore aggiornato del singolo giocatore, Players.
+
+ALGORITMO:
+valore del campo player alla posizione index di players := player
+
+
+FUNZIONE get_num_players()
+==========================
+
+Restituisce il valore del campo num_players del record Players.
+
+INPUT:
+- players, lista di giocatori di cui leggere il numero di giocatori, Players.
+
+OUTPUT:
+- num_players, valore del numero di giocatori del lista di giocatori, intero positivo.
+
+ALGORITMO:
+num_players := valore del campo num_players di players
+
+FUNZIONE set_num_players()
+==========================
+
+Aggiorna il valore del campo num_players del record Players con quello
+ricevuto.
+
+INPUT:
+- players, lista di giocatori di cui aggiornare il numero di giocatori, Players;
+- num_players, valore del numero di giocatori da impostare, intero positivo.
+
+OUTPUT:
+- players, lista di giocatori col valore aggiornato del numero di giocatori, Players.
+
+ALGORITMO:
+valore del campo num_players di players := num_players
+
+

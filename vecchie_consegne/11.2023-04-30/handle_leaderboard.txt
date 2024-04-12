@@ -1,0 +1,145 @@
+MODULO DI GESTIONE DELLA CLASSIFICA
+===================================
+
+vedere "./common/math.txt"
+vedere "./common/string.txt"
+vedere "./common/globals.txt"
+vedere "./common/records.txt"
+
+Questo modulo contiene le funzioni per lavorare con la classifica di gioco.
+
+
+------------------------------------------------------------
+
+
+FUNZIONE create_entry()
+=======================
+
+Inserisce i valori username e score all'interno della struttura Entry.
+
+OUTPUT:
+- entry, singola voce della classifica, Entry.
+
+OUTPUT:
+- entry, singola voce della classifica con valori inseriti, Entry.
+
+
+FUNZIONE store_entries()
+========================
+
+Riempie la lista di Entry con le relative coppie username-score.
+
+INPUT:
+- entries, voci della classifica, Entries;
+- num_entries, quante singole voci inserire nelle voci della classifica, intero.
+
+OUTPUT:
+- entries, voci della classifica, Entries;
+
+
+FUNZIONE swap_entries()
+=======================
+
+Date due strutture Entry, le scambia di posizione
+
+INPUT:
+- entry1, prima voce della classifica da modificare, Entry;
+- entry2, seconda voce della classifica da modificare, Entry.
+
+OUTPUT:
+- entry1, prima voce della classifica che ha il valore di entry2, Entry;
+- entry2, seconda voce della classifica che ha il valore di entry1, Entry;
+
+FUNZIONE sort_entries()
+=======================
+
+Dato un Entries, lo riordina basandosi sul punteggio delle singole Entry. Le
+Entry con punteggio più alto saranno le prime e se due Entry hanno lo stesso
+punteggio, vengono riordinate alfabeticamente secondo l'username.
+
+INPUT:
+- entries, voci della classifica, Entries.
+
+OUTPUT:
+- entries, voci della classifica riordinate, Entries;
+
+FUNZIONE read_entries()
+=======================
+
+Data una struttura Entries e il nome di un file, legge ogni riga di quest'ultimo
+finché la fine del file non viene raggiunta. Per ogni riga, esegue il parse della
+stessa e la inserire in una struttura Entry che viene successivamente inserita
+nella struttura Entries.
+
+INPUT:
+- entries, voci della classifica, Entries;
+- filename, nome del file da cui leggere la classifica, stringa.
+
+OUTPUT:
+- entries, voci della classifica, Entries;
+
+FUNZIONE parse_entry()
+======================
+
+Data una stringa letta da file, ne ricava username e score. La stringa dovrebbe
+essere del tipo "[username] [score]", dove [username] è una stringa di
+lunghezza massima MAX_USERNAME_LENGHT e [score] un intero. La funzione copia
+l'username nel campo username di Entry e lo score nel campo score di Entry.
+
+INPUT:
+- str, stringa di cui effettuare il parse, stringa;
+- entry, singola voce della classifica, Entry.
+
+OUTPUT:
+- entry, singola voce della classifica con valori inseriti, Entry;
+
+FUNZIONE write_entries()
+========================
+
+Questa funzione legge dal file ricevuto le singole Entry e le salva nel vettore
+presente nella struttura Entries, dopodiché aggiunge le Entry ricevute, le
+riordina, rimuove i duplicati e infine le riscrive sul file.
+
+INPUT:
+- entries, voci della classifica, Entries;
+- filename, nome del file da cui leggere la classifica, stringa.
+
+OUTPUT:
+- nullo, non ha output.
+
+FUNZIONE append_entries()
+=========================
+
+Questa funzione copia la struttura Entries ricevuta alla fine di un'altra
+struttura Entries.
+
+INPUT:
+- existing_entries, voci esistenti della classifica, Entries;
+- new_entries, voci da aggiungere a existing_entries, Entries.
+
+OUTPUT:
+- total_entries, struttura contenente sia le existing_entries che le new_entries, Entries.
+
+FUNZIONE remove_duplicates()
+============================
+
+Rimuove qualsiasi diplicato presente all'interno della struttura Entries ricevuta.
+
+INPUT:
+- entries, voci della classifica, Entries;
+
+OUTPUT:
+- entries, voci della classifica senza duplicati, Entries;
+
+FUNZIONE print_leaderboard()
+============================
+
+Stampa la classifica a video con rank, username e punteggio. Se due voci hanno
+lo stesso punteggio, avranno anche lo stesso rank. Il formato della classifica
+è il seguente "[rank] [username] [score]".
+
+INPUT:
+- entries, voci della classifica, Entries;
+
+OUTPUT:
+- nullo, non ha output.

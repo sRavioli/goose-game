@@ -1,0 +1,122 @@
+MODULO PER LA GESTIONE DELL'AIUTO
+=================================
+
+vedere "../library/math.txt"
+vedere "../library/string.txt"
+vedere "../library/globals.txt"
+vedere "../library/records.txt"
+
+Questo modulo contiene le funzioni per la gestione dell'aiuto.
+
+-------------------------------------------------------------------------------
+
+Costanti definite in questo modulo:
+- HELP_MENU_FILE := "../menus/help/help.txt", rappresenta il percorso del file
+                    del menu di aiuto;
+- RULES_FILE := "../menus/help/rules.txt", rappresenta il percorso del file
+                contenente le regole
+- MANUAL_FILE := "../menus/help/manual.txt", rappresenta il percorso del file
+                 contenente il manuale;
+- ESC_KEY := 27, rappresenta il valore numerico della chiave "Esc" sulla tastiera;
+- ENTER_KEY := 13, rappresenta il valore numerico della chiave "Enter" sulla tastiera.
+
+-------------------------------------------------------------------------------
+
+
+
+
+FUNZIONE menu_help()
+====================
+
+Stampa il menu di aiuto e esegue le azioni scelte dall'utente.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- menu_loop, indica se continuare a richiedere l'input utente, booleana che assume
+  valore TRUE se continuare a chiedere e FALSE altrimenti;
+
+
+ALGORITMO:
+clear_screen()
+print_from_file(HELP_MENU_FILE)
+
+menu_loop := TRUE
+MENTRE (menu_loop = TRUE)
+  key := LeggereDaTastiera()
+  SE (key = 'r')
+    ALLORA print_from_file(RULES_FILE)
+    ALTRIMENTI SE (key = 'm')
+      ALLORA print_from_file(MANUAL_FILE)
+      ALTRIMENTI SE (key = 'q')
+        ALLORA menu_loop := FALSE
+      FINE
+    FINE
+  FINE
+FINE
+
+
+FUNZIONE display_rules()
+========================
+
+Stampa le regole del gioco.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- display, indica se continuare a chiedere input all'utente, booleano che assume
+  valore TRUE se continuare e FALSE altrimenti.
+
+ALGORITMO:
+clear_screen()
+print_from_file(RULES_FILE)
+StampareAVideo("Exit with q or ESC or ENTER")
+display := TRUE
+MENTRE (display = TRUE)
+  key = LeggereDaTastiera()
+
+  SE (key = ESC_KEY OR key = 'q' OR key = ENTER_KEY)
+    ALLORA
+      display := FALSE
+      menu_help()
+  FINE
+FINE
+
+
+FUNZIONE display_manual()
+========================
+
+Stampa il manuale del gioco.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- display, indica se continuare a chiedere input all'utente, booleano che assume
+  valore TRUE se continuare e FALSE altrimenti.
+
+ALGORITMO:
+clear_screen()
+print_from_file(MANUAL_FILE)
+StampareAVideo("Exit with q or ESC or ENTER")
+display := TRUE
+MENTRE (display = TRUE)
+  key = LeggereDaTastiera()
+
+  SE (key = ESC_KEY OR key = 'q' OR key = ENTER_KEY)
+    ALLORA
+      display := FALSE
+      menu_help()
+  FINE
+FINE

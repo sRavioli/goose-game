@@ -1,0 +1,271 @@
+MODULO DI GESTIONE DELLA CLASSIFICA
+===================================
+
+vedere "../library/math.txt"
+vedere "../library/string.txt"
+vedere "../library/globals.txt"
+vedere "../library/records.txt"
+
+Questo modulo contiene le funzioni per lavorare con la classifica di gioco.
+
+-------------------------------------------------------------------------------
+
+Costanti definite in questo modulo:
+- LEADERBOARD_FILE := "../data/leaderboard.bin"
+
+-------------------------------------------------------------------------------
+
+
+FUNZIONE display_leaderboard()
+==============================
+
+Stampa le regole del gioco.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- display, indica se continuare a chiedere input all'utente, booleano che assume
+  valore TRUE se continuare e FALSE altrimenti.
+
+ALGORITMO:
+clear_screen()
+entries := read_entries(LEADERBOARD_FILE)
+print_leaderboard(entries)
+
+StampareAVideo("Exit with q or ESC or ENTER")
+display := TRUE
+MENTRE (display = TRUE)
+  key = LeggereDaTastiera()
+
+  SE (key = ESC_KEY OR key = 'q' OR key = ENTER_KEY)
+    ALLORA
+      display := FALSE
+      main_menu()
+  FINE
+FINE
+
+
+FUNZIONE read_entries()
+=======================
+
+Legge da un file di testo una struttura ti tipo Entries e la salva all'interno
+e la restituisce.
+
+INPUT:
+- filnename, file da cui leggere la classifica, stringa.
+
+OUTPUT:
+- entries, classifica contenuta nella struttura, Entries.
+
+ALGORITMO:
+entries := LeggereDaFile(file)
+
+
+-----------------------------------------
+
+
+FUNZIONE append_entries()
+=========================
+
+Date due strutture di tipo Entries, aggiunge la seconda alla prima.
+
+INPUT:
+- existing, struttura a cui aggiungere l'altra struttura, Entries;
+- new, struttura da aggiungere alla struttura existing, Entries.
+
+OUTPUT:
+- existing, struttura con l'aggiunta della struttura new, Entries.
+
+ALGORITMO:
+i := get_num_entries(existing)
+MENTRE (i < get_num_entries(new))
+  elemento in posizione i di existing := elemento in posizione i di new
+  i := i + 1
+FINE
+set_num_entries(existing, i)
+
+
+FUNZIONE rm_duplicate_entries()
+===============================
+
+Data una struttura di tipo Entries, rimuove qualsiasi duplicato presente nella
+stessa, conservando la voce con il punteggio più alto.
+
+INPUT:
+- entries, struttura da cui rimuovere i duplicati, Entries.
+
+OUTPUT:
+- entries, struttura con i duplicati rimossi, Entries.
+
+LAVORO:
+- i, contatore intero per iterare sulla classifica, intero;
+- j, contatore intero per iterare sulla classifica, intero;
+- num_entries, numero di elementi presente nella struttura, intero;
+- current, voce corrente della classifica nell'iterazione, Entry;
+- next, voce succesiva della classifica nell'iterazione, Entry.
+
+ALGORITMO:
+i := 0
+num_entries := get_num_entries(entries)
+MENTRE (i < num_entries - 1)
+  current := get_entry(entries, i)
+  next := get_entry(entries, i + 1)
+  // if entries have same username are considered a duplicate
+  SE (str_compare(get_name(current), get_name(next)) = TRUE)
+    ALLORA
+      j := i + 1;
+      MENTRE (j < num_entries - 1)
+        set_entry(entries, get_entry(entries, j + 1), j)
+        j := j + 1
+      FINE
+      num_entries := num_entries - 1
+      // keep checking from this index to ensure no missing
+      i := i - 1
+  FINE
+  i := i + 1
+FINE
+
+FUNZIONE swap_entries()
+=======================
+
+Date due strutture Entry, le scambia di posizione.
+
+INPUT:
+- first, prima struttura da scambiare con la seconda, Entry;
+- second, seconda struttura da scambiare con la prima, Entry.
+
+OUTPUT:
+- first, prima struttura con i valori della seconda, Entry;
+- second, seconda struttura con i valodi della prima, Entry.
+
+LAVORO:
+- temp_name, variabile temporanea per salvare il nome della prima voce, stringa;
+- temp_score, variabile temp_score per salvare il punteggio della prima voce, intero.
+
+ALGORITMO:
+temp_name = get_name(first)
+temp_score = get_final_score(first)
+
+set_name(first, get_name(second))
+set_final_score(first, get_final_score(second))
+
+set_name(second, temp_name)
+set_final_score(second, temp_score)
+
+
+FUNZIONE sort_entries()
+=======================
+
+Data una struttura di tipo Entries la ordina secondo i punteggi e se questi sono
+uguali, secondo il nome utente.
+
+INPUT:
+- entries, struttura da riordinare, Entries.
+
+OUTPUT:
+- entries, struttura riordinata, Entries.
+
+LAVORO:
+- i, contatore intero per iterare sulla classifica, intero;
+- j, contatore intero per iterare sulla classifica, intero;
+- entryi, voce i-esima della classifica, Entry;
+- entryj, voce j-esima della classifica, Entry;
+- is_score_greater, determina se un punteggio sia maggiore di un altro, booleano
+  che assume valore VERO se il primo punteggio è maggiore e FALSO altrimenti;
+- is_score_equal, determina se un punteggio è uguale ad un altro, booleano che
+  assume valore VERO se i due punteggi sono uguali e FALSO altrimenti;
+- is_name_prev, determina se un nome viene alfabeticamente prima dell'altro, booleano
+  che assume valore VERO se se il primo nome viene alfabeticamente prima e FALSO
+  altrimenti;
+- should_swap_entries, determina se sia necessario scambiare due voci, booleano
+  che assume valore VERO se il primo punteggio sia maggiore dell'altro oppure
+  se i due punteggi sono uguali e il nome viene alfabeticamente prima e FALSO
+  altrimenti.
+
+ALGORITMO:
+i := 0
+MENTRE (i < get_num_entries(entries))
+  j := 0
+  MENTRE (j < get_num_entries(entries))
+    entryi := get_entry(entries, i)
+    entryj := get_entry(entries, j)
+    is_score_greater := get_final_score(entryj) > get_final_score(entryi)
+    is_score_equal := get_final_score(entryj) = get_final_score(entryi)
+    is_name_prev := str_compare(get_name(entryj), get_name(entryi))
+    should_swap_entries := is_score_greater OR (is_score_equal AND is_name_prev)
+
+    SE (should_swap_entries)
+      ALLORA swap_entries(entryi, entryj)
+    FINE
+    j := j + 1
+  FINE
+  i := i + 1
+FINE
+rm_duplicate_entries(entries)
+
+
+FUNZIONE write_entries()
+========================
+
+Data una struttura di tipo Entries e il nome di un file, legge la struttura
+presente su file e la salva in una struttura di tipo Entries. Aggiunge le Entries
+ricevute in input a quelle lette, esegue il sorting e infine riscrive la struttura
+Entries finale su file binario.
+
+INPUT:
+- entries, classifica di gioco, Entries;
+- file, file da cui leggere la classifica, file.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- file_entries, classifica letta da file a cui aggiungere entries, Entries.
+
+ALGORITMO:
+file_entries := read_entries(filnename)
+append_entries(file_entries, entries)
+sort_entries(file_entries)
+ScrivereSuFile(file_entries, file)
+
+
+-----------------------------------------
+
+
+FUNZIONE print_leaderboard()
+============================
+
+Data una struttura di tipo Entries la stampa a video nel seguente formato:
+"[rank] [username] [score]". Nel caso in cui due voci abbiano lo stesso punteggio,
+avranno anche lo stesso rank.
+
+INPUT:
+- entries, voci della classifica da stampare, Entries.
+
+OUTPUT:
+- nullo, non ha output.
+
+ALGORITMO:
+StampareAVideo("RANK  USERNAME  SCORE")
+rank := 1
+prev_score := -1
+i := 0
+MENTRE (i < get_num_entries(entries))
+  entry := get_entry(entries, i)
+
+  SE (get_final_score(entry) <> prev_score)
+    ALLORA
+      prev_score := get_final_score(entry)
+      rank := i + 1
+  FINE
+  StampareAVideo(rank)
+  StampareAVideo(SPACE_CHAR)
+  StampareAVideo(get_name(entry))
+  StampareAVideo(SPACE_CHAR)
+  StampareAVideo(get_final_score(entry))
+  i := i + 1
+FINE

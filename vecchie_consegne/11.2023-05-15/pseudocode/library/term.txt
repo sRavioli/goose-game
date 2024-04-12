@@ -1,0 +1,102 @@
+FUNZIONI PER LAVORARE CON IL TERMINALE
+======================================
+
+vedere "../globals.txt"
+vedere "./string.txt"
+
+Questo file contiene implementazioni di diverse funzioni per poter lavorare con
+il terminale.
+
+
+--------------------------------------------------------------------------------
+
+
+FUNZIONE clear_screen()
+=======================
+
+Cancella tutto il contenuto presente a schermo utilizzando direttive specifiche
+per il sistema operativo.
+
+INPUT:
+- nullo, non riceve nulla.
+
+OUTPUT:
+- nullo, non restituisce nulla.
+
+
+------------------------------------------------------------
+
+
+FUNZIONE clear_line()
+=====================
+
+Cancella l'ultima riga su cui si è stampato qualcosa utilizzando delle direttive
+specifiche per il sistema operativo.
+
+INPUT:
+- nullo, non riceve nulla.
+
+OUTPUT:
+- nullo, non restituisce nulla.
+
+
+------------------------------------------------------------
+
+
+FUNZIONE get_term_size()
+========================
+
+Restituisce le dimensioni del terminale utilizzando direttive specifiche per il
+sistema operativo.
+
+INPUT:
+- width, variabile che riceverà il valore della larghezza del terminale, intero
+  maggiore di zero;
+- height, variabile che riceverà il valore dell'altezza del terminale, intero
+  maggiore di zero.
+
+OUTPUT:
+- width, il valore della larghezza del terminale, intero maggiore di zero;
+- height, il valore dell'altezza del terminale, intero maggiore di zero;
+
+
+------------------------------------------------------------
+
+
+FUNZIONE print_text()
+=====================
+
+INPUT:
+- text, testo che deve essere stampato, stringa.
+- direction, in che direzione stampare il testo, stringa che può assumere tre
+  valori: "left", "center", "right".
+
+OUTPUT:
+- nullo, non restituisce output, vuoto.
+
+ALGORITMO:
+SE (str_compare(direction, "left") = 1)
+  ALLORA StampareAVideo(text)
+  ALTRIMENTI SE (str_compare(direction, "center") = 1)
+    ALLORA print_text_center(text, width)
+    ALTRIMENTI SE (str_compare(direction, "right") = 1)
+      ALLORA print_text_right(text, width)
+      ALTRIMENTI StampareAVideo(text)
+    FINE
+  FINE
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE print_from_file()
+==========================
+
+Questa funzione legge il contenuto di un file riga per riga e lo stampa.
+
+INPUT:
+- file, file di cui leggere il contenuto, file.
+
+ALGORITMO:
+StampareAVideo(LeggereDaFile(file))

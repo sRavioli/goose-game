@@ -1,0 +1,109 @@
+TIPO DI DATO GAMESTATE
+======================
+
+Il tipo di dato GameState deve essere rappresentato come un record composto da:
+- una stringa che rappresenti il nome della partita;
+- un record che rappresenti i giocatori in partita;
+- un record che rappresenti il tabellone di gioco;
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD GameState:
+- game_name, il nome della partita, stringa di lunghezza massima MAX_BUFFER_LEN;
+- game_players, i giocatori in partita, Players;
+- game_board, il tabellone di gioco, Board;
+
+FUNZIONI DI ACCESSO
+===================
+
+Le seguenti funzioni permettono l'accesso alle informazioni del tipo di dato
+GameState:
+
+FUNZIONE get_game_name()
+========================
+
+Restituisce il valore del campo game_name del record GameState.
+
+INPUT:
+- game_state, partita di cui leggere il nome della partita, GameState.
+
+OUTPUT:
+- game_name, valore del nome della partita, stringa.
+
+ALGORITMO:
+game_name := valore del campo game_name di game_state
+
+FUNZIONE set_game_name()
+========================
+
+Aggiorna il valore del campo game_name del record GameState con quello ricevuto.
+
+INPUT:
+- game_state, partita di cui aggiornare il nome della partita, GameState;
+- game_name, valore del nome della partita da impostare, stringa.
+
+OUTPUT:
+- game_state, partita col valore aggiornato del nome della partita, GameState.
+
+ALGORITMO:
+valore del campo game_name di game_state := game_name
+
+FUNZIONE get_game_players()
+===========================
+
+Restituisce il valore del campo game_players del record GameState.
+
+INPUT:
+- game_state, partita di cui leggere i giocatori in partita, GameState.
+
+OUTPUT:
+- game_players, valore dei giocatori in partita del partita, Players.
+
+ALGORITMO:
+game_players := valore del campo game_players di game_state
+
+FUNZIONE set_game_players()
+===========================
+
+Aggiorna il valore del campo game_players del record GameState con quello ricevuto.
+
+INPUT:
+- game_state, partita di cui aggiornare i giocatori in partita, GameState;
+- game_players, valore dei giocatori in partita da impostare, Players.
+
+OUTPUT:
+- game_state, partita col valore aggiornato dei giocatori in partita, GameState.
+
+ALGORITMO:
+valore del campo game_players di game_state := game_players
+
+FUNZIONE get_game_board()
+=========================
+
+Restituisce il valore del campo game_board del record GameState.
+
+INPUT:
+- game_state, partita di cui leggere il tabellone di gioco, GameState.
+
+OUTPUT:
+- game_board, valore del tabellone di gioco del partita, Board.
+
+ALGORITMO:
+game_board := valore del campo game_board di game_state
+
+FUNZIONE set_game_board()
+=========================
+
+Aggiorna il valore del campo game_board del record GameState con quello ricevuto.
+
+INPUT:
+- game_state, partita di cui aggiornare il tabellone di gioco, GameState;
+- game_board, valore del tabellone di gioco da impostare, Board.
+
+OUTPUT:
+- game_state, partita col valore aggiornato del tabellone di gioco, GameState.
+
+ALGORITMO:
+valore del campo game_board di game_state := game_board
+

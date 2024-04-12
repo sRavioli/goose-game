@@ -1,0 +1,8 @@
+MAIN MENU:
+[n]ew game
+[s]aved games
+[l]eaderboard
+[h]elp
+[q]uit
+
+tip: press the key inside the brackets to choose the option.

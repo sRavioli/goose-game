@@ -1,0 +1,21 @@
+MANUALE
+
+Sono consentiti da 2 a 4 giocatori .
+
+Il tabellone da gioco è formato da un percorso a spirale formato da minimo 50
+caselle e massimo 90 caselle. Ogni giocatore è contraddistinto da una differente
+pedina e sono compresi due dadi.
+
+Lo scopo di questo semplice gioco è di giungere alla casella finale prima degli
+altri giocatori.
+
+INTERFACCIA
+- tasto 'n' := new game, avvia una nuova partita;
+- tasto 's' := saved games, fa scegliere i giochi salvati;
+- tasto 'g' := save game, salva la partita corrente;
+- tasto 'l' := leaderboard, stampa la classifica;
+- tasto 'h' := help, stampa il menù di aiuto;
+- tasto 'r' := rules, stampa le regole;
+- tasto 'm' := manual, stampa il manuale (questo messaggio);
+- tasto 'd' := roll die, tira i dadi;
+- tasto 'q' := quit, esce dal menù precedente.

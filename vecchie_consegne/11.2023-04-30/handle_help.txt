@@ -1,0 +1,17 @@
+MODULO PER LA GESTIONE DELL'AIUTO
+=================================
+
+Questo modulo contiene le funzioni per la gestione dell'aiuto.
+
+
+------------------------------------------------------------
+
+
+FUNZIONE print_from_file()
+==========================
+
+Questa funzione legge il contenuto di un file riga per riga e lo stampa.
+
+INPUT:
+- filename, nome del file di cui leggere il contenuto, stringa.
+

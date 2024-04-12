@@ -1,0 +1,873 @@
+MODULO DI GESTIONE DELLA PARTITA
+================================
+
+vedere "./common/math.txt"
+vedere "./common/string.txt"
+vedere "./common/globals.txt"
+vedere "./common/records.txt"
+
+Questo modulo contiene le funzioni per la gestione della partita stessa.
+
+
+------------------------------------------------------------
+
+
+FUNZIONE ask_num_squares()
+==========================
+
+Richiede all'utente di inserire il numero di caselle del tabellone di gioco e
+restituisce il valore inserito.
+
+OUTPUT:
+- num_squares, il numero di caselle scelto dal giocatore, intero compreso tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+ALGORITMO:
+StampareAVideo("Inserici il numero di caselle [50, 90]:")
+num_squares := LeggereDaTastiera()
+MENTRE ((num_squares < MIN_NUM_SQUARES) OR (num_squares > MAX_NUM_SQUARES))
+  StampareAVideo("Il numero inserito non è valido.")
+  StampareAVideo("Inserici il numero di caselle [50, 90]:")
+  num_squares := LeggereDaTastiera()
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE ask_num_players()
+==========================
+
+Chiede il numero di giocatori e lo salva nella lista Players.
+
+OUTPUT:
+- num_players, numero di giocatori scelti dal giocatore, intero maggiore o
+  uguale a MIN_NUM_PLAYERS e minore o uguale a MAX_NUM_PLAYERS.
+
+ALGORITMO:
+StampareAVideo("Inserici il numero di giocatori [2, 4]:")
+num_players := LeggereDaTastiera()
+MENTRE ((num_players < MIN_NUM_PLAYERS) OR (num_players > MAX_NUM_PLAYERS))
+  StampareAVideo("Il numero inserito non è valido.")
+  StampareAVideo("Inserici il numero di giocatori [2, 4]:")
+  num_players := LeggereDaTastiera()
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE create_board()
+=======================
+
+Crea un tabellone vuoto con la dimensione data, lo riempie di caselle e inserisce
+le caselle oca e caselle speciali.
+
+INPUT:
+- dimension, dimensione del tabellone di gioco che va creato, intero maggiore
+  di zero
+
+OUTPUT:
+- board, tabellone con tutte le caselle inserite, Board.
+
+LAVORO:
+- i, contatore delle caselle del tabellone di gioco, intero maggiore di zero.
+
+ALGORITMO:
+board := set_dim(board, dimension)
+i := 0
+MENTRE (i < dimension)
+  board := set_square(board, i, i + 1);
+  i := i + 1;
+FINE
+board := insert_goose_squares(board)
+board := insert_special_squares(board)
+
+
+FUNZIONE insert_goose_squares()
+===============================
+
+Aggiunge le caselle oca al tabellone di gioco, a partire dalla casella con
+indice GOOSE_SPACING, con un intervallo tra di esse sempre pari a GOOSE_SPACING.
+
+INPUT:
+- board, il tabellone di gioco dove si svolgerà la partita, Board.
+
+OUTPUT:
+- board, tabellone di gioco dove si svolgerà la partita con le caselle oca, Board.
+
+LAVORO:
+- num_squares, il numero di caselle scelto dal giocatore, intero compreso tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+- i, contatore delle caselle del tabellone di gioco, intero maggiore o uguale
+  a GOOSE_SPACING.
+
+ALGORITMO:
+num_squares := get_dim(board)
+i := GOOSE_SPACING;
+MENTRE (i < num_squares)
+  board := set_square(board, i, GOOSE_VALUE)
+  i := i + GOOSE_SPACING;
+FINE
+
+
+FUNZIONE insert_special_squares()
+=================================
+
+Inserisce le caselle speciali nel tabellone di gioco.
+
+INPUT:
+- board, tabellone di gioco dove si svolgerà la partita, Board.
+
+OUTPUT:
+- board, tabellone di gioco riempito con le caselle oca e speciali, Board.
+
+LAVORO:
+- board_dim, il valore della dimensione del tabellone di gioco, intero maggiore
+  o uguale a MIN_NUM_SQUARES AND minore o uguale a MAX_NUM_SQUARES.
+
+ALGORITMO:
+board_dim := get_dim(board)
+
+bridge_position := proportion(BRIDGE_SQUARE, board_dim, MAX_NUM_SQUARES)
+bridge_position := check_special_square(bridge_position, board)
+board := set_square(board, bridge_position, BRIDGE_VALUE)
+
+inn_position := proportion(INN_SQUARE, board_dim, MAX_NUM_SQUARES)
+inn_position := check_special_square(inn_position, board)
+board := set_square(board, inn_position, INN_VALUE)
+
+well_position := proportion(WELL_SQUARE, board_dim, MAX_NUM_SQUARES)
+well_position := check_special_square(well_position, board)
+board := set_square(board, well_position, WELL_VALUE)
+
+labyrinth_position := proportion(LABYRINTH_SQUARE, board_dim, MAX_NUM_SQUARES)
+labyrinth_position := check_special_square(labyrinth_position, board)
+board := set_square(board, labyrinth_position, LABYRINTH_VALUE)
+
+prison_position := proportion(PRISON_SQUARE, board_dim, MAX_NUM_SQUARES)
+prison_position := check_special_square(prison_position, board)
+board := set_square(board, prison_position, PRISON_VALUE)
+
+skeleton_position := proportion(SKELETON_SQUARE, board_dim, MAX_NUM_SQUARES)
+skeleton_position := check_special_square(skeleton_position, board)
+board := set_square(board, skeleton_position, SKELETON_VALUE)
+
+
+FUNZIONE check_special_square()
+-------------------------------
+
+Verifica se la posizione della casella speciale nel tabellone di gioco crea un
+conflitto con una casella oca.
+
+INPUT:
+- special_square, posizione della casella speciale all'interno del tabellone di
+  gioco, intero maggiore di zero;
+- board, il tabellone di gioco dove si svolgerà la partita, Board.
+
+OUTPUT:
+- allowed_special_pos, posizione della casella speciale che non crea conflitto
+  con le caselle oca, intero maggiore di zero.
+
+ALGORITMO:
+allowed_special_pos := special_square
+SE (get_square(board, special_square) = GOOSE_VALUE)
+  ALLORA allowed_special_pos := allowed_special_pos + 1
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE print_board()
+======================
+
+INPUT:
+- board, tabellone di gioco su cui si svolgerà la partita, Board.
+- cols, numero di colonne che il tabellone deve avere, intero maggiore di zero;
+- square_len, lunghezza desiderata della singola casella, intero maggiore di zero;
+- borders, definisce quali caratteri utilizzare per costruire il bordo, array di
+  massimo otto caratteri che segue il seguente ordine: nw_corner (es. "┌"),
+  ne_corner (es. "┐"), sw_corner (es. "└"), se_corner (es. "┘"),
+  join_down (es. "┬"), join_up (es. "┴"), dash (es. "─"), vert (es. "│"),
+
+OUTPUT:
+- nullo, non restituisce niente, vuoto.
+
+LAVORO:
+- game_board, tabellone di gioco generato, stringa.
+
+ALGORITMO:
+game_board := build_board(board, cols, square_len, borders)
+StampareAVideo(game_board)
+
+
+FUNZIONE build_border()
+-----------------------
+
+INPUT:
+- borders, lista di caratteri da utilizzare per il bordo, array di caratteri che
+  deve seguire il seguente ordine: west_char, east_char, join_char, dash_char;
+- square_len, lunghezza desiderata della singola casella, intero maggiore di zero;
+- cols, numero di colonne con cui costruire il tabellone, intero maggiore di zero;
+- rows, numero di righe con cui costruire il tabellone, intero maggiore di zero;
+- row, colonna corrente all'interno del tabellone, intero maggiore di zero;
+- board, tabellone di gioco su cui si svolge la partita, Board.
+
+OUTPUT:
+- buffer, bordo che è stato costruito secondo i dati di input, stringa.
+
+LAVORO:
+- ndash, parte del bordo che contiene solo dash_char, stringa;
+- square_size, dimensione effettiva della casella, intero maggiore di zero;
+- board_dim, dimensione del tabellone di gioco, intero maggiore di zero;
+- col, contatore per iterare sul numero di colonne, intero maggiore o uguale a
+  zero;
+- pos, valore della posizione all'interno del tabellone, intero maggiore di zero;
+- is_last_of_row, indica se la casella è l'ultima della riga, booleano che assume
+  valore 1 se vero, 0 altrimenti;
+- is_fist, indica se la casella è la prima del tabellone, booleano che assume
+  valore 1 se vero, 0 altrimenti;
+
+ALGORITMO:
+ndash := str_nconcat(ndash, dash_char, square_len - 1)
+square_size := 1 + square_len * str_length(west_char);
+board_dim := get_dim(board);
+
+col := 0;
+MENTRE (col < cols)
+  SE (mod(row, 2) = TRUE) {
+    ALLORA
+      pos := row * cols + col;
+      is_last_of_row :=
+          ((col = cols - 1) AND (row <> rows - 1)) OR (pos = board_dim - 1)
+
+      SE (col = 0)                             // 1st sq of the row
+        ALLORA
+          str_concat(buffer, west_char)
+          str_concat(buffer, ndash)
+        ALTRIMENTI SE (is_last_of_row = TRUE)          // last sq of the row
+          ALLORA
+            str_concat(buffer, join_char)
+            str_concat(buffer, ndash)
+            str_concat(buffer, east_char)
+          ALTRIMENTI SE (pos < board_dim - 1)   // between 1st & last
+            ALLORA
+              str_concat(buffer, join_char)
+              str_concat(buffer, ndash)
+            ALTRIMENTI                          // when traveling RtL
+              str_nconcat(buffer, SPACE_CHAR, square_len)
+            FINE
+          FINE
+        FINE
+      FINE
+  ALTRIMENTI
+    pos = (row + 1) * cols - col - 1;
+    is_fist = (col = 0) AND (row <> rows - 1);
+
+    SE ((is_fist = TRUE) OR (pos = board_dim - 1)) // 1st sq of the row and last sq
+      ALLORA
+        str_concat(buffer, west_char)
+        str_concat(buffer, ndash)
+      ALTRIMENTI SE (col = cols - 1)           // last sq of the row
+        ALLORA
+          str_concat(buffer, east_char)
+          str_concat(buffer, ndash)
+          str_concat(buffer, join_char)
+        ALTRIMENTI SE (pos < board_dim - 1)    // between 1st & last
+          ALLORA
+            str_concat(buffer, east_char)
+            str_concat(buffer, ndash)
+          ALTRIMENTI                           // when traveling LtR
+            str_nconcat(buffer, SPACE_CHAR, square_len)
+        FINE
+      FINE
+    FINE
+  FINE
+  col := col + 1
+FINE
+str_concat(buffer, LINE_END)
+
+
+FUNZIONE square_to_str()
+------------------------
+
+INPUT:
+- square, valore della casella del tabellone, intero maggiore di zero;
+
+OUTPUT:
+- buffer, valore della casella del tabellone, stringa.
+
+ALGORITMO:
+SE (square = GOOSE_VALUE)
+  ALLORA str_concat(buffer, "X2")
+  ALTRIMENTI SE (square = BRIDGE_VALUE)
+    ALLORA str_concat(buffer, "BR")
+    ALTRIMENTI SE (square = INN_VALUE)
+      ALLORA str_concat(buffer, "IN")
+      ALTRIMENTI SE (square = WELL_VALUE)
+        ALLORA str_concat(buffer, "WE")
+        ALTRIMENTI SE (square = LABYRINTH_VALUE)
+          ALLORA str_concat(buffer, "LA")
+          ALTRIMENTI SE (square = PRISON_VALUE)
+            ALLORA str_concat(buffer, "PR")
+            ALTRIMENTI SE (square = SKELETON_VALUE)
+              ALLORA str_concat(buffer, "SK")
+              ALTRIMENTI str_concat(buffer, int_to_str(square))
+            FINE
+          FINE
+        FINE
+      FINE
+    FINE
+  FINE
+FINE
+
+
+FUNZIONE build_squares()
+------------------------
+
+INPUT:
+- vert, separatore verticale da utilizzare, carattere;
+- square_len, lunghezza desiderata della singola casella, intero maggiore di zero;
+- cols, numero di colonne del tabellone di gioco, intero maggiore di zero;
+- rows, numero di righe del tabellone di gioco, intero maggiore di zero;
+- row, riga corrente del tabellone, intero maggiore o uguale a zero;
+- board, tabellone di gioco su cui si svolgerà la partita, Board.
+
+OUTPUT:
+- buffer, caselle per la riga row del tabellone, stringa.
+
+LAVORO:
+- board_dim, numero di caselle del tabellone di gioco, intero maggiore o uguale
+  a MIN_NUM_SQUARES e minore o uguale di MAX_NUM_SQUARES;
+- lspacing, numero di spazi da inserire tra vert e il valore della casella, intero
+  maggiore di zero;
+- rspacing, numero di spazi da inserire tra il valore della casella e vert, intero
+  maggiore di zero;
+- col, numero corrente della colonna, intero maggiore o uguale a zero;
+- pos, posizione all'interno del tabellone, intero maggiore di zero;
+- square, valore della casella del tabellone, intero maggiore o uguale a zero;
+- sq, valore di square convertito a stringa, stringa;
+- is_fist, indica se la casella è la prima del tabellone, booleano che assume
+  valore 1 se vero, 0 altrimenti;
+- is_last, indica se la casella è l'ultima del tabellone, booleano che assume
+  valore 1 se vero, 0 altrimenti;
+
+ALGORITMO:
+board_dim := get_dim(board)
+lspacing := (square_len - 3) / 2;
+SE (mod(square_len, 2) <> 0)
+  ALLORA rspacing := lspacing
+  ALTRIMENTI rspacing := lspacing + 1
+FINE
+
+col := 0
+MENTRE (col < cols)
+  SE (mod(row, 2) = TRUE)
+    ALLORA
+      pos := row * cols + col
+      square := get_square(board, pos)
+      sq := square_to_str(square)
+
+      is_first := (col = cols - 1) AND (row <> rows - 1)
+      is_last := (pos = board_dim - 1) AND (row = rows - 1)
+
+      SE ((is_fist = TRUE) OR (is_last = TRUE))
+        ALLORA
+          str_concat(buffer, vert)
+          str_nconcat(buffer, SPACE_CHAR, lspacing)
+          str_concat(buffer, sq)
+          str_nconcat(buffer, SPACE_CHAR, rspacing)
+          str_concat(buffer, vert)
+        ALTRIMENTI SE (pos < board_dim)
+          ALLORA
+            str_concat(buffer, vert)
+            str_nconcat(buffer, SPACE_CHAR, lspacing)
+            str_concat(buffer, sq)
+            str_nconcat(buffer, SPACE_CHAR, rspacing)
+          ALTRIMENTI
+            str_nconcat(buffer, SPACE_CHAR, square_len)
+        FINE
+      FINE
+    ALTRIMENTI
+      pos := (row + 1) * cols - col - 1
+      square := get_square(board, pos)
+      sq := square_to_str(square)
+
+      SE (col = cols - 1)
+        ALLORA
+          str_concat(buffer, vert)
+          str_nconcat(buffer, SPACE_CHAR, lspacing)
+          str_concat(buffer, sq)
+          str_nconcat(buffer, SPACE_CHAR, rspacing)
+          str_concat(buffer, vert)
+        ALTRIMENTI SE (pos < board_dim)
+          ALLORA
+            str_concat(buffer, vert)
+            str_nconcat(buffer, SPACE_CHAR, lspacing)
+            str_concat(buffer, sq)
+            str_nconcat(buffer, SPACE_CHAR, rspacing)
+          ALTRIMENTI
+            str_nconcat(buffer, SPACE_CHAR, square_len)
+        FINE
+      FINE
+  FINE
+  col := col + 1
+FINE
+str_concat(buffer, LINE_END)
+
+
+FUNZIONE build_board()
+----------------------
+
+INPUT:
+- board, tabellone di gioco su cui si svolgerà la partita, Board;
+- cols, numero di colonne con cui stampare il tabellone, intero maggiore di zero;
+- square_len, lunghezza desiderata della singola casella, intero maggiore di zero;
+- borders, definisce quali caratteri utilizzare per costruire il bordo, array di
+  massimo otto caratteri che segue il seguente ordine: nw_corner (es. "┌"),
+  ne_corner (es. "┐"), sw_corner (es. "└"), se_corner (es. "┘"),
+  join_down (es. "┬"), join_up (es. "┴"), dash (es. "─"), vert (es. "│").
+
+OUTPUT:
+- game_board,
+
+LAVORO:
+- rows, il numero di colonne che il tabellone possiederà, intero maggiore di zero;
+- top_borders, i caratteri che il bordo superiore utilizza, array di caratteri;
+- bot_borders, i caratteri che il bordo inferiore utilizza, array di caratteri;
+- top, bordo superiore del tabellone per la riga row, stringa;
+- squares, caselle del tabellone per la riga row, stringa;
+- bot, bordo inferiore del tabellone per la tiga row, stringa.
+
+ALGORITMO:
+rows := (get_dim(board) + cols - 1) / cols  // calculate needed rows
+top_borders := {nw_corner, ne_corner, join_down, dash}
+bot_borders := {sw_corner, se_corner, join_up, dash}
+
+row := 0;
+MENTRE (row < rows)
+  top = build_border(top_borders, square_len, cols, rows, row, board)
+  str_concat(game_board, top)
+
+  squares = build_squares(vert, square_len, cols, rows, row, board)
+  str_concat(game_board, squares)
+
+  bot = build_border(bot_borders, square_len, cols, rows, row, board)
+  str_concat(game_board, bot)
+
+  row := row + 1
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE fill_players()
+=======================
+
+Riempie la lista di giocatori.
+
+INPUT:
+- players, lista dei giocatori che giocheranno ad una partita, Players.
+
+OUTPUT:
+- players, lista dei giocatori modificata che giocheranno ad una partita, Players.
+
+LAVORO:
+- player, indica un giocatore da aggiungere in gioco, Player.
+
+ALGORITMO:
+num_players := get_num_players(players)
+i := 0
+MENTRE (i < num_players)
+  username := ask_username(username)
+  player := set_username(player, username)
+  player := set_position(player, INITIAL_POSITION)
+  player := set_score(player, INITIAL_SCORE)
+  players := set_players(players, player, i)
+  players := set_turn_order(get_players(players, i), i)
+  i := i + 1
+  FINE
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE ask_username()
+=======================
+
+Questa funzione richiede all'utente di inserire un nome utente, controlla se il
+nome utente è valido utilizzando is_username_valid(). Se il nome utente non è valido,
+stampa un messaggio di errore e avvisa l'utente per riprovare. Se il nome utente
+è valido, lo tronca se necessario utilizzando truncate_username() e lo converte
+in maiuscolo usando str_to_uppercase().
+
+INPUT:
+- username, nome utente da far scegliere al giocatore, stringa.
+
+OUTPUT:
+- username, nome utente scelto modificato secondo i criteri stabiliti, stringa.
+
+LAVORO:
+- valid, indica se la stringa sia valida, booleano che assume valore FALSE se
+  non è valida, TRUE altrimenti.
+
+ALGORITMO:
+valid := FALSE
+MENTRE (NOT valid = TRUE)
+  StampareAVideo("Inserici il tuo username: ")
+  username := LeggereDaTastiera()
+  SE (is_username_valid(username) = TRUE)
+    ALLORA
+      username := truncate_username(username, MAX_USERNAME_LENGTH)
+      username := str_to_uppercase(username)
+      valid := TRUE
+    ALTRIMENTI
+      StampareAVideo("Username non valido, riprova.")
+  FINE
+FINE
+
+
+FUNZIONE is_username_valid()
+============================
+
+Questa funzione controlla se il nome utente è valido, se il nome utente non è
+valido, stampa un messaggio di errore e avvisa l'utente per riprovare.
+
+INPUT:
+- username, nome utente scelto da controllare, stringa.
+
+OUTPUT:
+- result, esito del controllo, booleano che assume valore FALSE se non è valido,
+  TRUE altrimenti.
+
+LAVORO:
+- i, contatore della stringa username, intero maggiore di zero.
+
+ALGORITMO:
+username_len := str_length(username)
+i := 0
+MENTRE (i < username_len)
+  SE ((is_punctuation(elemento in posizione i di username) = TRUE) OR
+      (is_digit(elemento in posizione i di username) = TRUE))
+    ALLORA result := FALSE
+  FINE
+  i := i + 1
+FINE
+result := TRUE
+
+
+FUNZIONE truncate_username()
+============================
+
+INPUT:
+- username, nome utente scelto, array a 1 dimensione di caratteri.
+- lenght, lunghezza massima consentita di username, intero, >0.
+
+OUTPUT:
+- username, nome utente scelto da troncare se necessario, array a 1 dimensione di caratteri.
+
+ALGORITMO:
+SE (str_length(username) > MAX_USERNAME_LENGTH)
+  ALLORA username := str_truncate(username, MAX_USERNAME_LENGTH)
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE launch_new_game()
+==========================
+
+Avvia una nuova partita.
+
+INPUT:
+- players, lista di players, Players;
+- board, il tabellone di gioco, Board;
+
+OUTPUT:
+- nullo, non ha output.
+
+ALGORITMO:
+num_players := ask_num_players()
+players := set_players_num(players, num_players)
+
+num_squares := ask_num_squares()
+board := create_board(num_squares)
+
+players := fill_players(players)
+
+game_loop(players, board)
+
+
+FUNZIONE game_loop()
+====================
+
+Il ciclo di gioco vero e proprio che stampa il tabellone e fa giocare i giocatori.
+
+INPUT:
+- players, lista di giocatori che giocheranno al gioco dell'oca, Players;
+- board, tabellone di gioco su cui si svolgerà la partita, Board.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- players_num, il numero di giocatori che giocano al gioco dell'oca, intero
+  maggiore o uguale di MIN_NUM_PLAYERS e minore o uguale di MAX_NUM_PLAYERS;
+- game_board, il tabellone di gioco da stampare, stringa;
+- break, condizione utilizzata per abbandonare la partita, booleano che assume
+  valore TRUE se si vuole abbandonare la partita, FALSE altrimenti.
+- current_player, contatore per iterare sul numero di giocatori, intero maggiore
+  o uguale a zero;
+- player_action, scelta che il giocatore fa nel menù, intero;
+- throw, valore del lancio di due dadi, intero compreso tra MIN_DICE_THROW e
+  MAX_DICE_THROW inclusi.
+
+
+ALGORITMO:
+players_num := get_players_num(players)
+game_board := build_board(board, DEFAULT_COLS, DEFAULT_SQUARE_LEN, DEFAULT_BORDERS)
+
+break := FALSE
+MENTRE (is_player_winner() <> 1) OR (NOT(break) = TRUE)
+  StampareAVideo(game_board)
+  current_player := 0
+  MENTRE (current_player < players_num)
+    StampareAVideo("Il giocatore ")
+    StampareAVideo(get_username(elemento in posizione current_player di player))
+    StampareAVideo("si trova in posizione: ")
+    StampareAVideo(get_position(elemento in posizione current_player di player))
+    StampareAVideo(LINE_END)
+    current_player := current_player + 1
+  FINE
+
+  current_player := 0
+  MENTRE (current_player < players_num)
+    player_action = ask_player_action()
+    SE (player_action = 1)
+      ALLORA
+        throw := random(MIN_DICE_THROW, MAX_DICE_THROW)
+        set_players(players, current_player) :=
+          move_player(players, get_players(players, current_player), throw, board)
+      ALTRIMENTI SE (player_action = 0)
+        ALLORA break := TRUE
+        ALTRIMENTI SE (player_action = 2)
+          ALLORA save_game()  // salva la partita
+        FINE
+      FINE
+    FINE
+
+    current_player := current_player + 1
+  FINE
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE ask_player_action()
+============================
+
+Chiede al giocatore cosa fare ed elenca le possibili scelte.
+
+INPUT:
+- nullo, non riceve input.
+
+OUTPUT:
+- player_choice, scelta del giocatore, intero compreso tra MIN_NUM_PLAYERS e
+  MAX_NUM_PLAYERS inclusi.
+
+ALGORITMO:
+StampareAVideo("Che vuoi fare?:")
+StampareAVideo("Per abbandonare la partita premere 0")
+StampareAVideo("Per lanciare i dadi premere 1")
+StampareAVideo("Per salvare la partita premere 2")
+player_choice := LeggereDaTastiera()
+MENTRE ((player_choice < 0) AND (player_choice > 2))
+  StampareAVideo("Il numero inserito non è valido.")
+  StampareAVideo("Che vuoi fare?:")
+  StampareAVideo("Per abbandonare la partita premere 0")
+  StampareAVideo("Per lanciare i dadi premere 1")
+  StampareAVideo("Per salvare la partita premere 2")
+  player_choice := LeggereDaTastiera()
+FINE
+
+
+------------------------------------------------------------
+
+
+FUNZIONE move_player()
+======================
+
+Sposta il giocatore di un numero di caselle uguali al lancio.
+
+INPUT:
+- players, lista di giocatori che giocheranno al gioco dell'oca, Players;
+- player, giocatore attuale, Player;
+- throw, valore del lancio dei dadi, intero compreso tra MIN_DICE_THROW e
+  MAX_DICE_THROW inclusi;
+- board, tabellone di gioco su cui si svolgerà la partita, Board.
+
+OUTPUT:
+- player, player con nuova posizione, Player.
+
+ALGORITMO:
+position := check_player_pos(players, player, board, throw)
+player := set_position(player, position)
+
+
+FUNZIONE check_player_pos()
+===========================
+
+Controlla la posizione di arrivo con il lancio effettuato e restituisce la
+posizione di arrivo corretta.
+
+INPUT:
+- players, lista di giocatori che giocheranno al gioco dell'oca, Players;
+- player, giocatore attuale da inserire nella lista di giocatori, Player;
+- board, tabellone di gioco su cui svolgerà la partita, Board;
+- throw, valore del lancio dei dadi, intero maggiore di zero.
+
+OUTPUT:
+- pos, posizione corretta dove arriverà il giocatore, intero compreso tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+LAVORO:
+- position, posizione del player prima del lancio dei dadi, intero maggiore o
+  uguale di MIN_NUM_SQUARES AND minore o uguale di MAX_NUM_SQUARES;
+- new_sq, posizione ottenuta dalla posizione del player prima del lancio dei
+  dadi sommata al valore del lancio dei dadi, intero maggiore o uguale di
+  MIN_NUM_SQUARES AND minore o uguale di MAX_NUM_SQUARES;
+- new_player, se il player finisce in prigione o pozzo new_player conterra, se
+  presente, il giocatore già bloccato in prigione o nel pozzo, Player.
+
+ALGORITMO:
+pos := 1
+position := get_position(player)
+new_sq := get_square(throw + position)
+turns_blocked := get_turns_blocked(player)
+SE (turns_blocked = 0)
+  ALLORA
+    SE ((new_sq = GOOSE_VALUE) OR (new_sq = BRIDGE_VALUE))
+      ALLORA
+        pos = (throw * 2) + position
+      ALTRIMENTI SE (new_sq = SKELETON_VALUE)
+        ALLORA
+          pos = 1
+        ALTRIMENTI SE ((new_sq = PRISON_VALUE) OR (new_sq = WELL_VALUE))
+          ALLORA
+            SE ((throw = 5) OR (throw = 7))
+              ALLORA
+                player := set_turns_blocked(player, 0)
+                check_player_pos(players, board, throw + position)
+              ALTRIMENTI SE (is_player_in_square(players, player, new_sq) = TRUE)
+                ALLORA
+                  new_player := get_player_in_square(players, player, new_sq)
+                  new_player := set_turns_blocked(player, 0)
+                  player := set_turns_blocked(player, turns_blocked - 1)
+                ALTRIMENTI
+                  player := set_turns_blocked(player, turns_blocked - 1)
+                FINE
+              FINE
+            FINE
+          ALTRIMENTI
+            pos := new_sq
+        FINE
+      FINE
+    FINE
+  ALTRIMENTI SE (turns_blocked > 0)
+    ALLORA
+      player := set_turns_blocked(player, turns_blocked - 1)
+      pos := position
+  FINE
+FINE
+
+
+FUNZIONE is_player_in_square()
+==============================
+
+Controlla se un altro giocatore, diverso dal giocatore attuale, è posizionato
+nella casella data.
+
+INPUT:
+- players, lista di giocatori che giocheranno al gioco dell'oca, Players;
+- player, player che sta attualmente giocando, Players;
+- square, posizione da verificare se un altro giocatore è presente, intero
+  maggiore di zero.
+
+OUTPUT:
+- result, esito della ricerca di un altro giocatore nella posizione data, booleano
+  che assume valore TRUE se è gia presente un altro giocatore, FALSE se non è
+  presente.
+
+LAVORO:
+- i, indice per scorrere i giocatori, intero maggiore di zero.
+
+ALGORITMO:
+num_players := get_num_players(players)
+i := 1
+result := FALSE
+MENTRE (i < num_players)
+  SE ((get_players(players, i) <> player) AND
+      (get_position(get_players(players, i)) = square))
+    ALLORA result = TRUE
+  i := i + 1
+FINE
+
+FUNZIONE get_player_in_square()
+===============================
+
+Restituisce il giocatore, diverso dal giocatore attuale,  posizionato nella casella data
+
+INPUT:
+- players, lista di giocatori che giocheranno al gioco dell'oca, Players;
+- player, player che sta attualmente giocando, Players;
+- square, posizione da verificare se un altro giocatore è presente, intero
+  maggiore di zero.
+
+OUTPUT:
+- new_player, giocatore posizionato nella casella data diverso dal giocatore attuale, Player.
+
+LAVORO:
+- i, indice per scorrere i giocatori, intero maggiore di zero.
+
+ALGORITMO:
+num_players := get_num_players(players)
+i := 1
+MENTRE (i < num_players)
+  SE ((get_players(players, i) <> player) AND
+      (get_position(get_players(players, i)) = square))
+    ALLORA new_player := get_players(players, i)
+  i := i + 1
+FINE
+
+
+FUNZIONE is_player_winner()
+===========================
+
+Controlla se c'è un vincitore tra i giocatori, ovvero se un giocatore è
+arrivato alla casella finale
+
+INPUT:
+- players, lista di giocatori che giocheranno al gioco dell'oca, Players;
+- board, tabellone di gioco su cui si svolgerà la partita, Board.
+
+OUTPUT:
+- result, esito della ricerca se c'è un vincitore, booleano che assume valore FALSE
+  se non c'è un vincitore, TRUE se un giocatore ha vinto.
+
+LAVORO:
+- i, indice per scorrere i giocatori, intero maggiore di zero.
+
+ALGORITMO:
+num_players := get_num_players(players)
+i := 1
+result := FALSE
+MENTRE (i < num_players)
+  SE (get_position(get_players(players, i)) = get_dim(board))
+    ALLORA result = TRUE
+  i := i + 1
+FINE

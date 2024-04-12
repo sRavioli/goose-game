@@ -1,0 +1,26 @@
+MODULI DA UTILIZZARE PER IL GIOCO DELL'OCA
+==========================================
+
+HANDLE GAME
+===========
+
+Contiene tutte le funzioni che gestiscono il funzionamento della singola partita,
+come ad esempio la stampa del tabellone, lo spostamento dei giocatori, etc.
+
+
+HANDLE LEADERBOARD
+==================
+
+Contiene tutte le funzioni relative alla lettura, scrittura, aggiornamento e
+stampa della classifica.
+
+
+HANDLE HELP
+===========
+
+Contiene tutte le funzioni relative alla lettura e stampa del file di aiuto.
+
+HANDLE SAVING
+=============
+
+Contiene tutte le funzioni relative alla lettura e scrittura da/su file.

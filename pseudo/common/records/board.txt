@@ -1,0 +1,137 @@
+TIPO DI DATO BOARD
+==================
+
+Il tipo di dato Board rappresenta tabellone di gioco ed è definito come un
+record contenente:
+- squares, vettore di interi a una dimensione che rappresenta le caselle del
+  tabellone;
+- dim, intero che indica il numero di caselle possedute dal tabellone.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI RELATIVE AL TIPO DI DATO BOARD
+---------------------------------------
+
+MIN_NUM_SQUARES := 50 // Il numero minimo di caselle consentite nel tabellone.
+MAX_NUM_SQUARES := 90 // Il numero massimo di caselle consentite nel tabellone.
+
+GOOSE_SPACING := 9 // La distanza tra le caselle dell'oca sul tabellone.
+GOOSE_VALUE := 0   // Il valore di una casella dell'oca sul tabellone.
+
+BRIDGE_SQUARE := 6     // La posizione della casella del ponte sul tabellone.
+INN_SQUARE := 19       // La posizione della casella dell'osteria sul tabellone.
+WELL_SQUARE := 31      // La posizione della casella del pozzo sul tabellone.
+LABYRINTH_SQUARE := 42 // La posizione della casella del labirinto sul tabellone.
+PRISON_SQUARE := 52    // La posizione della casella della prigione sul tabellone.
+SKELETON_SQUARE := 58  // La posizione della casella dello scheletro sul tabellone.
+
+BRIDGE_VALUE := -1    // Il valore della casella del ponte sul tabellone.
+INN_VALUE := -2       // Il valore della casella dell'osteria sul tabellone.
+WELL_VALUE := -3      // Il valore della casella del pozzo sul tabellone.
+LABYRINTH_VALUE := -4 // Il valore della casella del labirinto sul tabellone.
+PRISON_VALUE := -5    // Il valore della casella della prigione sul tabellone.
+SKELETON_VALUE := -6  // Il valore della casella dello scheletro sul tabellone.
+
+LABYRINTH_DEFAULT_POS := 33 //Il valore della casella dove dovrebbe finire se arriva sul labirinto nel tabellone è da 90
+TURNS_BLOCKED_BY_INN := 3 //Numero dei turni bloccati se il giocatore si posiziona sulla casella INN
+
+GOOSE_TEXT := "move forward a number of squares equal to double of those obtained by rolling the dices"
+INN_TEXT := "3 turns blocked"
+WELL_TEXT := "remain blocked until another player arrives to take your place"
+BRIDGE_TEXT := "move forward a number of squares equal to double of those obtained by rolling the dices"
+LABYRINTH_TEXT := "go to square %d"
+PRISON_TEXT := "remain blocked until another player arrives to take your place"
+SKELETON_TEXT := "go back to the start"
+
+
+NUM_SPECIAL_SQUARES := 6 // Il numero di caselle speciali presenti nel tabellone
+
+DEFAULT_COLS := 15      // Il numero di colonne predefinito nel tabellone.
+DEFAULT_SQUARE_LEN := 7 // La lunghezza predefinita di una casella nel tabellone.
+
+// I bordi predefiniti da utilizzare durante la stampa del tabellone.
+// Questo è array di otto stringhe che rappresentano i caratteri da utilizzare
+// per il bordo in alto a sinistra, in alto a destra, in basso a sinistra, in
+// basso a destra, il bordo superiore, il bordo inferiore, il bordo orizzontale
+// e il bordo verticale di ogni casella, rispettivamente.
+DEFAULT_BORDERS := [ "+", "+", "+", "+", "+", "+", "-", "|" ]
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+RECORD Board:
+- squares, array unidimensionale di interi che rappresenta il tabellone di gioco;
+- dim, intero che rappresenta la dimensione del tabellone e può variare tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+FUNZIONI DI ACCESSO
+===================
+
+Le seguenti funzioni permettono l'accesso alle informazioni del tipo di dato
+Board:
+
+FUNZIONE get_square()
+=====================
+
+Restituisce il valore del campo square del record Board all'indice
+dato.
+
+INPUT:
+- board, tabellone di gioco di cui leggere la casella, Board;
+- index, indice al quale leggere la casella, intero.
+
+OUTPUT:
+- square, valore della casella del tabellone di gioco all'indice dato, intero positivo.
+
+ALGORITMO:
+square := valore del campo square alla posizione index di board
+
+FUNZIONE set_square()
+=====================
+
+Aggiorna il valore del campo square del record Board all'indice
+dato, con quello ricevuto.
+
+INPUT:
+- board, tabellone di gioco di cui aggiornare la casella, Board;
+- index, indice al quale aggiornare il valore del campo square, intero;
+- square, valore della casella da impostare all'indice dato, intero positivo.
+
+OUTPUT:
+- board, tabellone di gioco col valore aggiornato di la casella, Board.
+
+ALGORITMO:
+valore del campo square alla posizione index di board := square
+
+
+FUNZIONE get_dim()
+==================
+
+Restituisce il valore del campo dim del record Board.
+
+INPUT:
+- board, tabellone di gioco di cui leggere il numero di caselle, Board.
+
+OUTPUT:
+- dim, valore del numero di caselle del tabellone di gioco, intero positivo.
+
+ALGORITMO:
+dim := valore del campo dim di board
+
+FUNZIONE set_dim()
+==================
+
+Aggiorna il valore del campo dim del record Board con quello
+ricevuto.
+
+INPUT:
+- board, tabellone di gioco di cui aggiornare il numero di caselle, Board;
+- dim, valore del numero di caselle da impostare, intero positivo.
+
+OUTPUT:
+- board, tabellone di gioco col valore aggiornato del numero di caselle, Board.
+
+ALGORITMO:
+valore del campo dim di board := dim
+

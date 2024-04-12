@@ -1,0 +1,4 @@
+HELP MENU:
+[r]ules
+[m]anual
+[q]uit

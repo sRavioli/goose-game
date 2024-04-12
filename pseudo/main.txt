@@ -1,0 +1,64 @@
+FILE PRINCIPALE DI GIOCO
+========================
+
+Costanti definite in questo modulo:
+- MAIN_MENU_FILE := "./menus/main.txt"
+
+-------------------------------------------------------------------------------
+
+FUNZIONE PRINCIPALE
+===================
+
+La funzione principale che permette di avviare il gioco.
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- menu_loop, indica se continuare a richiedere l'input utente, booleana che assume
+  valore TRUE se continuare a chiedere e FALSE altrimenti;
+
+ALGORITMO:
+wait_keypress("press to launch the game")
+print_main_menu()
+
+menu_loop := TRUE
+MENTRE (menu_loop = TRUE)
+  key := leggere_da_tastiera()
+  SE (key = 'n') ALLORA
+    new_game()
+    main_menu()
+  ALTRIMENTI SE (key = 's') ALLORA
+    saved_games()
+    main_menu()
+  ALTRIMENTI SE (key = 'l') ALLORA
+    leaderboard()
+    main_menu()
+  ALTRIMENTI SE (key = "h") ALLORA
+    menu_help()
+    main_menu()
+  ALTRIMENTI SE (key = 'q') ALLORA
+    clear_line()
+    menu_loop := FALSE
+  ALTRIMENTI
+    print_err(INVALID_KEY_ERROR)
+  FINE
+FINE
+
+------------------------------------------------------------
+
+FUNZIONE main_menu()
+====================
+
+INPUT:
+- nullo, non ha input.
+
+OUTPUT:
+- nullo, non ha output.
+
+ALGORITMO:
+new_screen()
+print_menu(MAIN_MENU_FILE)

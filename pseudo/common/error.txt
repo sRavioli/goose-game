@@ -1,0 +1,104 @@
+FUNZIONI PER GLI ERRORI
+=======================
+
+Questo file contiene le funzioni per gli errori.
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+COSTANTI DEL MODULO
+-------------------
+
+ERROR_FILE := "../res/text/errors.txt"
+
+INVALID_KEY_ERROR := 1
+
+VALUE_OUT_OF_BOUND_ERROR := 2
+INVALID_INPUT_ERROR := 3
+
+INVALID_USERNAME_ERROR := 4
+DUPLICATE_USERNAME_ERROR := 5
+
+ALLOCATION_FAILED_ERROR := 6
+STR_ALLOCATION_FAILED_ERROR := 7
+
+INVALID_FILENAME_ERROR := 8
+FILE_NOT_WRITABLE_ERROR := 9
+FILE_NOT_READABLE_ERROR := 10
+
+CALL_STACK_OVERFLOW_ERROR := 11
+CALL_STACK_UNDERFLOW_ERROR := 12
+
+INVALID_GAME := 13
+LIMIT_SAVES := 14
+NO_SAVES_ERROR := 15
+
+EMPTY_LEADERBOARD_ERROR := 16
+
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+FUNZIONE print_err()
+====================
+Stampa l'errore leggendolo da file e continua l'esecuzione.
+
+INPUT:
+- index, indice del file da leggere l'errore, intero
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- buffer, stringa contenente una riga del file, stringa;
+- lines, numero di riga del file da iterare per trovare l'indice, intero;
+
+ALGORITMO
+SE (aprire_file(ERROR_FILE) = NULL) ALLORA
+  stampare_a_video("Failed to read from file")
+  uscire()
+FINE
+
+lines := 0
+ESEGUI
+  lines := lines + 1
+  SE(lines := index) ALLORA
+    buffer := leggere_riga_da_file(ERROR_FILE)
+    stampare_a_video(buffer)
+  FINE SE
+FINCHÉ (leggere_carattere(ERROR_FILE) <> EOF)
+chiudere_file(ERROR_FILE)
+FINE FINCHÉ
+
+
+FUNZIONE throw_err()
+====================
+Stampa l'errore e termina il programma.
+
+INPUT:
+- index, indice del file da leggere l'errore, intero.
+
+OUTPUT:
+- nullo, non ha output.
+
+LAVORO:
+- buffer, stringa contenente una riga del file, stringa;
+- num_lines, numero di righe del file, intero positivo;
+
+
+ALGORITMO
+SE (aprire_file(ERROR_FILE) = NULL) ALLORA
+  stampare_a_video("Failed to read from file")
+  uscire()
+FINE SE
+
+lines := 0
+ESEGUI
+  lines := lines + 1
+  SE (lines := index) ALLORA
+    buffer := leggere_riga_da_file(ERROR_FILE)
+    stampare_a_video(buffer)
+  FINE
+FINCHÉ (leggere_carattere(ERROR_FILE) <> EOF)
+FINE FINCHÉ
+chiudere_file(ERROR_FILE)
+uscire()

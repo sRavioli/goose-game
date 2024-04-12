@@ -1,0 +1,247 @@
+CREAZIONE E STAMPA DEL TABELLONE DI GIOCO
+=========================================
+
+@see "globals.txt"
+@see "records.txt"
+
+Creazione e stampa del tabellone di gioco con le funzioni necessarie per 
+l'inizializzazione dello stesso e aggiunta di caselle speciali.
+
+Le funzioni incluse in quest file permettono di definire la dimensione del 
+tabellone, inserire caselle oca e speciali, inserire quest'ultime in maniera
+proporzionale al numero di caselle del tabellone senza creare conflitti con le 
+caselle oca.
+
+LAVORO:
+- num_squares, il numero di caselle scelto dal giocatore, intero compreso tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi;
+- board, il tabellone di gioco dove si svolgerà la partita, Board.
+
+ALGORITMO:
+num_squares := get_num_squares()
+board := set_dim(board, num_squares)
+board := insert_goose_squares(board)
+board := insert_special_squares(board)
+print_board(game_board)
+
+
+funzione get_num_squares()
+==========================
+
+Richiede all'utente di inserire il numero di caselle del tabellone di gioco e 
+restituisce il valore inserito.
+
+OUTPUT:
+- num_squares, il numero di caselle scelto dal giocatore, intero compreso tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+
+ALGORITMO:
+StampareAVideo("Inserici il numero di caselle [50, 90]:")
+num_squares := LeggereDaTastiera()
+MENTRE ((num_squares < MIN_NUM_SQUARES) OR (num_squares > MAX_NUM_SQUARES))
+  StampareAVideo("Il numero inserito non è valido.")
+  StampareAVideo("Inserici il numero di caselle [50, 90]:")
+  num_squares := LeggereDaTastiera()
+FINE
+
+
+funzione insert_goose_squares()
+===============================
+
+Aggiunge le caselle oca al tabellone di gioco, a partire dalla casella con indice 
+GOOSE_SPACING, con un intervallo tra di esse sempre pari a GOOSE_SPACING.
+
+INPUT:
+- board, il tabellone di gioco dove si svolgerà la partita, Board.
+
+OUTPUT:
+- new_board, il tabellone di gioco dove si svolgerà la partita, modificato con 
+  l'aggiunta delle caselle oca, Board.
+
+LAVORO:
+- num_squares, il numero di caselle scelto dal giocatore, intero compreso tra
+  MIN_NUM_SQUARES e MAX_NUM_SQUARES inclusi.
+- i, contatore delle caselle del tabellone di gioco, intero maggiore o uguale 
+  a GOOSE_SPACING.
+
+ALGORITMO:
+num_squares := get_dim(board)
+i := GOOSE_SPACING;
+MENTRE (i < num_squares)
+    new_board := set_square(board, i, GOOSE_VALUE)
+    i := i + GOOSE_SPACING;
+FINE
+
+
+funzione insert_special_squares()
+=================================
+
+Inserisce le caselle speciali nel tabellone di gioco.
+
+INPUT:
+- board, il tabellone di gioco dove si svolgerà la partita, modificato con 
+  l'aggiunta delle caselle oca. Board.
+
+OUTPUT:
+- game_board, il tabellone di gioco dove si svolgerà la partita, completo di 
+  oca e speciali. Board.
+
+ALGORITMO:
+bridge_position := proportion(BRIDGE_SQUARE, new_board)
+bridge_position := check_special_square(bridge_position, board)
+game_board := set_square(board, bridge_position, BRIDGE_VALUE)
+
+inn_position := proportion(INN_SQUARE, new_board)
+inn_position := check_special_square(inn_position, new_board)
+game_board := set_square(game_board, inn_position, INN_VALUE)
+
+well_position := proportion(WELL_SQUARE, game_board)
+well_position := check_special_square(well_position, game_board) 
+game_board := set_square(game_board, well_position, WELL_VALUE)
+
+labyrinth_position := proportion(LABYRINTH_SQUARE, game_board)
+labyrinth_position := check_special_square(labyrinth_position, game_board)
+game_board := set_square(game_board, labyrinth_position, LABYRINTH_VALUE)
+
+prison_position := proportion(PRISON_SQUARE, game_board)
+prison_position := check_special_square(prison_position, game_board)
+game_board := set_square(game_board, prison_position, PRISON_VALUE)
+
+skeleton_position := proportion(SKELETON_SQUARE, game_board)
+skeleton_position := check_special_square(skeleton_position, game_board)
+game_board := set_square(game_board, skeleton_position, SKELETON_VALUE)
+
+
+funzione proportion()
+---------------------
+
+Calcola il nuovo valore di posizione della casella speciale rapportato al
+numero di caselle ricevute in input.
+
+INPUT:
+- special_square, valore di posizione della casella speciale all'interno del 
+  tabellone da gioco, intero maggiore di zero;
+- board, il tabellone di gioco dove si svolgerà la partita, Board
+
+OUTPUT:
+- new_special_square, nuovo valore di posizione della casella speciale rapportato
+  al numero di caselle ricevute in input (num_squares), intero maggiore di zero.
+
+ALGORITMO:
+new_special_square := floor((special_square * get_dim(board)) / MAX_NUM_SQUARES)
+
+
+funzione floor()
+----------------
+
+Converte un numero decimale in un intero, eliminando la parte decimale.
+
+INPUT:
+- float_num, numero decimale da convertire in intero, reale maggiore di zero.
+
+OUTPUT:
+- int_num, numero intero senza la parte decimale, intero maggiore di zero.
+
+LAVORO:
+- i, indice per scorrere gli interi, intero maggiore di zero.
+
+ALGORITMO:
+int_num := 1
+i := 1
+MENTRE (i <= float_num)
+  SE (float_num > i)
+    ALLORA int_num := i
+  FINE
+  i := i + 1
+FINE
+
+
+funzione is_goose_square()
+--------------------------
+
+Verifica se una casella del tabellone è una casella oca o meno.
+
+INPUT:
+- position, valore della posizione di una casella del tabellone di cui verificare 
+  se sia casella oca o meno, intero maggiore di zero. 
+- board, il tabellone di gioco dove si svolgerà la partita, Board.
+
+OUTPUT:
+- esito, booleano che assume valore 1 se la casella "square" è una casella oca,
+  0 altrimenti.
+
+ALGORITMO:
+square := get_square(board, position)
+SE (square = GOOSE_SQUARE)
+   ALLORA esito := 1
+   ALTRIMENTI esito := 0
+FINE
+
+
+funzione check_special_square()
+-------------------------------
+
+Verifica se la posizione della casella speciale nel tabellone di gioco crea un 
+conflitto con una casella oca.
+
+INPUT:
+- special_square, valore della posizione della casella speciale all'interno del 
+  tabellone di gioco, intero maggiore di zero.
+- board, il tabellone di gioco dove si svolgerà la partita, Board.
+
+OUTPUT:
+- allowed_special_pos, valore della posizione della casella speciale che 
+  non crea alcun conflitto con le caselle oca. Intero maggiore di zero.
+
+ALGORITMO:
+allowed_special_pos := special_square
+SE (is_goose_square(special_square, board) = 1) 
+  ALLORA 
+    allowed_special_pos := allowed_special_pos + 1
+FINE
+
+funzione print_board()
+======================
+
+INPUT:
+- board, il tabellone di gioco dove si svolgerà la partita che va stampato, Board.
+
+LAVORO:
+- i, contatore per iterare sul campo squares di board, intero meggiore di zero
+
+ALGORITMO:
+i := 1
+counter := 1
+MENTRE (i < get_dim(board))
+  square_j := elemento di squares in posizione j
+  SE (square_j = GOOSE_VALUE)
+    ALLORA StampareAVideo("x2")
+    ALTRIMENTI SE (square_j = BRIDGE_VALUE)
+      ALLORA StampareAVideo("ponte")
+      ALTRIMENTI SE (square_j = INN_VALUE)
+        ALLORA StampareAVideo("locanda")
+        ALTRIMENTI SE (square_j = WELL_VALUE)
+          ALLORA StampareAVideo("pozzo")
+          ALTRIMENTI SE (square_j = LABYRINTH_VALUE)
+            ALLORA StampareAVideo("labirinto")
+            ALTRIMENTI SE (square_j = PRISON_VALUE)
+              ALLORA StampareAVideo("prigione")
+              ALTRIMENTI SE (square_j = SKELETON_VALUE)
+                ALLORA StampareAVideo("scheletro")
+                ALTRIMENTI
+                  StampareAVideo(square_j)
+              FINE
+            FINE
+          FINE
+        FINE
+      FINE
+    FINE
+  FINE
+  counter := counter + 1
+  SE (counter = 15)
+    ALLORA 
+      StampareAVideo(FINE_RIGA)
+      counter := 0
+  FINE
+  i := i + 1
+FINE
